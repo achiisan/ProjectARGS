@@ -1,0 +1,37 @@
+SET
+GET
+INCR - increment
+MGET
+MSET - multiple
+EXISTS - exists key
+TYPE key
+DEL mykey
+
+====expiry keys
+SET KEY val
+expire key 5
+ttl key
+
+
+====lists
+rpush
+lpush
+lrange
+rpop
+
+====hashes
+hmset <hash>
+hmget
+hget
+hset
+
+===set
+sadd <set> 
+
+===sorted sets
+zadd <set> <score> <value>
+zrange
+zrevrange
+zremrangebyscore
+
+

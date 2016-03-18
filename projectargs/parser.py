@@ -1,8 +1,8 @@
 #!/usr/bin/python
 
+
 class Parser:
-    def __init__(self):
-        print("Hello World")
+
      
     @staticmethod
     def fileread(filename):
@@ -13,6 +13,4 @@ class Parser:
         
         return filebuf
 
-filebuf = Parser.fileread("../schedule-list/classlist-2015-1.csv");
 
-print(filebuf);
