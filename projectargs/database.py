@@ -26,11 +26,24 @@ class Database:
 					self.r.execute("INSERT INTO subjectlist (coursecode, section, class_size, time, day, room, pri_instructor, sec_instructor) VALUES ('"+contents[0]+"','"+contents[1]+"','"+contents[2]+"','"+contents[3]+"','"+contents[4]+"','"+contents[5]+"','"+contents[6]+"','"+contents[7]+"')")
 					self.r.commit()
 			
+			
 		def loadStudentList(self):
 			filebuf = Parser.fileread("../fwdanonymizeddata/anon_PREDICTIONS")
 			
-			students = filebuf.split("#")
+			splitter = filebuf.split("###")
+			
+			students = splitter[1].split("#")
 			
 			for student in students:
-				print(student)
-				
+				#print(student)
+				studinfo = student.split("\n")
+				gotInfo = False
+				for info in studinfo:
+                                    if info.strip() != '' :
+                                        ic = info.split(",")
+                                       
+                                        if gotInfo == False:
+                                            self.r.execute("INSERT INTO studentlist VALUES('"+ic[0]+"','"+ic[1]+"','"+ic[2]+"',"+ic[3]+",'"+ic[4]+"','"+ic[5]+"','"+ic[6]+"',"+ic[7]+","+ic[8]+","+ic[9]+","+ic[10]+","+ic[11]+","+ic[12]+","+ic[13]+","+ic[14]+")")
+                                          
+                                            gotInfo = True
+                        self.r.commit()
