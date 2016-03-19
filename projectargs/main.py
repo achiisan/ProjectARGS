@@ -5,5 +5,7 @@ from database import Database
 
 r = Database()
 
-r.loadClasslist()
+#=========================LOAD INITIAL FILES
+#r.loadClasslist()
+r.loadStudentList()
 

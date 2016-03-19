@@ -22,7 +22,15 @@ class Database:
 		
 		
 				if len(contents) > 0:
-					print(contents[1])
+				#	print(contents[1])
 					self.r.execute("INSERT INTO subjectlist (coursecode, section, class_size, time, day, room, pri_instructor, sec_instructor) VALUES ('"+contents[0]+"','"+contents[1]+"','"+contents[2]+"','"+contents[3]+"','"+contents[4]+"','"+contents[5]+"','"+contents[6]+"','"+contents[7]+"')")
 					self.r.commit()
-					
+			
+		def loadStudentList(self):
+			filebuf = Parser.fileread("../fwdanonymizeddata/anon_PREDICTIONS")
+			
+			students = filebuf.split("#")
+			
+			for student in students:
+				print(student)
+				
