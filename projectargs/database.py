@@ -1,12 +1,13 @@
 #!/usr/bin/python
 
-import redis
+import sqlite3
 from parser import  Parser
 
 class Database:
 
 		def __init__(self):
-			self.r = redis.StrictRedis(host='localhost', port=6379, db=0)
+			self.r = sqlite3.connect("../database/projectargs.db")
+			print("Database Opened Successfully")
 
 
 		def loadClasslist(self):
@@ -15,33 +16,13 @@ class Database:
 			
 
 			for cls in classlist:
-				self.r.incr('subjcount')
-				n = self.r.get('subjcount')
+			
 
 				contents = cls.split(",")
-				mapping = {'coursecode':contents[0], 'section': contents[1], 'class_size': contents[2],'time':contents[3],'day': contents[4], 'room': contents[5], 'pri_instructor': contents[6], 'sec_instructor':contents[7]}
-
-				self.r.sadd('subjectlist',self.r.hmset('subject:'+str(n),mapping))
-
-				
-				
+		
+		
+				if len(contents) > 0:
+					print(contents[1])
+					self.r.execute("INSERT INTO subjectlist (coursecode, section, class_size, time, day, room, pri_instructor, sec_instructor) VALUES ('"+contents[0]+"','"+contents[1]+"','"+contents[2]+"','"+contents[3]+"','"+contents[4]+"','"+contents[5]+"','"+contents[6]+"','"+contents[7]+"')")
+					self.r.commit()
 					
-				
-
-
-
-
-
-		
-
-
-
-
-		
-
-
-
-
-
-
-
