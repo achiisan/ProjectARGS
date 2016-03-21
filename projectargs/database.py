@@ -33,7 +33,8 @@ class Database:
 			splitter = filebuf.split("###")
 			
 			students = splitter[1].split("#")
-			
+			count = 0;
+			self.r.execute("BEGIN TRANSACTION")
 			for student in students:
 				#print(student)
 				studinfo = student.split("\n")
@@ -44,6 +45,10 @@ class Database:
                                        
                                         if gotInfo == False:
                                             self.r.execute("INSERT INTO studentlist VALUES('"+ic[0]+"','"+ic[1]+"','"+ic[2]+"',"+ic[3]+",'"+ic[4]+"','"+ic[5]+"','"+ic[6]+"',"+ic[7]+","+ic[8]+","+ic[9]+","+ic[10]+","+ic[11]+","+ic[12]+","+ic[13]+","+ic[14]+")")
-                                          
+                                            count = count + 1
+                                            print(chr(27) + "[2J")
+                                            print("Saving Student#: ",count)
+                                            
                                             gotInfo = True
-				self.r.commit()
+                        self.r.execute("END TRANSACTION")
+                        self.r.commit()
