@@ -40,15 +40,17 @@ class Database:
 				studinfo = student.split("\n")
 				gotInfo = False
 				for info in studinfo:
-                                    if info.strip() != '' :
-                                        ic = info.split(",")
-                                       
-                                        if gotInfo == False:
-                                            self.r.execute("INSERT INTO studentlist VALUES('"+ic[0]+"','"+ic[1]+"','"+ic[2]+"',"+ic[3]+",'"+ic[4]+"','"+ic[5]+"','"+ic[6]+"',"+ic[7]+","+ic[8]+","+ic[9]+","+ic[10]+","+ic[11]+","+ic[12]+","+ic[13]+","+ic[14]+")")
-                                            count = count + 1
-                                            print(chr(27) + "[2J")
-                                            print("Saving Student#: ",count)
-                                            
-                                            gotInfo = True
-                        self.r.execute("END TRANSACTION")
-                        self.r.commit()
+					if info.strip() != '' :
+						ic = info.split(",")
+						if gotInfo == False:
+							self.r.execute("INSERT INTO studentlist VALUES('"+ic[0]+"','"+ic[1]+"','"+ic[2]+"',"+ic[3]+",'"+ic[4]+"','"+ic[5]+"','"+ic[6]+"',"+ic[7]+","+ic[8]+","+ic[9]+","+ic[10]+","+ic[11]+","+ic[12]+","+ic[13]+","+ic[14]+")")
+							count = count + 1
+							print(chr(27) + "[2J")
+							print("Saving Student#: ",count)
+							gotInfo = True
+							self.r.execute("CREATE TABLE IF NOT EXISTS'"+ic[0]+"' (SCHOOL YEAR TEXT, TERM TEXT, COURSE TEXT,SECTION TEXT, UNITS TEXT, GRADE TEXT, COURSERANK TEXT, CONTRIB TEXT)")
+						else:
+							self.r.execute("INSERT INTO '"+ic[0]+ "' VALUES('"+ic[1]+"','"+ic[2]+"','"+ic[3]+"','"+ic[4]+"','"+ic[5]+"','"+ic[6]+"','"+ic[7]+"'"+ic[8]+"')")
+
+			self.r.execute("END TRANSACTION")
+			
