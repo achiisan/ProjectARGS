@@ -11,3 +11,22 @@ Initial Plans for ProjectArgs
 - Schedule using Genetic Algorithm
 - UI / Web Interface
 
+==========================================================================================================
+==Predict==	
+-Generate Predictions file (Like in the ANON_Predictions file)
+
+
+==ENLIST==
+-Backtracking Major Subjects	
+	Create n schedules of data (Perfect scheduler)
+		Enlist students there based on priority
+			Check if they are valid to enlist the subject
+				if not do not enlist
+			Check if some subjects in the predictions list are not enlisted. 
+				Try to enlist them if there are any
+
+-Genetic Algorithm	
+
+==GENERATE==
+-FORM 5 DATA
+-UI / Web Interface

@@ -1,0 +1,117 @@
+HOW TO CONNECT TO SERVER===================================
+
+1. Copy the GameCommunicator.java from the SERVER project on your CLIENT project
+
+2. Paste this on the MAIN function of your CLIENT project
+
+GameCommunicator gc = null;
+try {
+		String ip = JOptionPane.showInputDialog("Please input IP Address of Game Core / Server");
+		String port = JOptionPane.showInputDialog("Please input Port no of Game Core");
+		gc = new GameCommunicator(InetAddress.getByName(ip), Integer.parseInt(port));
+	} catch (UnknownHostException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+
+3. "Ping" the server by sending a CONN message
+	gc.sendMessage("CONN#CLIENT");
+
+4. Initialize the Thread that will GET the messages from the SERVER
+	Thread l = new Thread(gc);
+	l.start();
+
+5. Paste this function on your CLIENT class. This function Interprets the Messages from the SERVER
+	Note na all functions na naka comment ay depende sa implementation mo sa client. Left it there for your reference :)
+	public static void getMessageContent(String message){
+			//System.out.println("CLIENT GOT "+message);
+			
+			String [] messages = message.split("#"); // Split the Message
+			
+			if(messages[0].equals("ACK")){  //This is the message that will be sent by the server upon sending the CONN message
+				Double id2 = Double.parseDouble(messages[1]); 
+				//id =  id2.intValue(); //I commented this function para gawa ka ng ID na attribute sa class
+				
+				System.out.println("ID IS NOW"+messages[1]); //print for verification
+				
+			}else if(messages[0].equals("TROOPUPD")){  //This deploys / updates position of a troop in the game panel
+				/* TROOP ID 
+				*	Yung function sa baba ay naglalaman ng UNIQUE ID ng troop sa SERVER. Eto na yung ID ng isang troop hanggang 
+				*   sa maubusan sya ng HP
+				* 	Si client ay magmamaintain din ng sarili nyang object list based sa nakukuha nya dito.
+				*/
+				int x = Integer.parseInt(messages[2]); 
+				
+				/*
+				if(objects.containsKey(x)){ //Find the troop ID on the object list sa client and then pag nahanap...
+					double xc = Double.parseDouble(messages[3]);
+					double yc = Double.parseDouble(messages[4]);
+					//Yung implementation dito depende sa implementation mo ng Player sa client.
+					//Kung pano ka nagdedeploy ng troop sa client side
+
+					//Update lang ng x and y coordinate and HP
+					//Player d = objects.get(x);
+					//d.xcoor = (float) xc;
+					//d.ycoor = (float) yc;
+					//d.hp = Integer.parseInt(messages[5]);
+					//d.action = messages[6]; //Yung actions ay para sa pagpapapalit ng images ng client (walking, attack, etc.) Nasa baba yung possible actions
+					
+					/*
+					if(d.action.equals("INVERSE")){
+						d.images = d.imgholderinv;
+					}else if(d.action.equals("ATKINV")){
+						d.images = d.imgholderatkinv;
+					}else if(d.action.equals("ATK")){
+						d.images = d.imgholderatk;
+					}else if(d.action.equals("NORMAL")){
+						d.images = d.imgholder;
+					}
+					
+					
+					
+				}else {
+					//	System.out.println("NEW TROOP!!---------------------");
+					
+					double xc = Double.parseDouble(messages[3]);
+					double yc = Double.parseDouble(messages[4]); 
+					 String st = messages[7].toLowerCase();
+					st =  st.trim();
+					
+					//	System.out.println(message);
+				
+				try{
+					//Player temp = new Player(Characters.charlist.get(st).name, Characters.charlist.get(st).referenceimglink ,Characters.charlist.get(st).referenceimglink,(int) xc ,(int) yc, Integer.parseInt(messages[5]), Characters.charlist.get(st).atkstrength, Characters.charlist.get(st).range);
+					//temp.charID = Integer.parseInt(messages[1]); 
+					//gw.add(temp); //Si gw ay yung JPanel na dindedeployan
+					
+					// temp.activated = true;
+					//objects.put(x, temp);
+				}catch(Exception e){
+					//e.printStackTrace();
+				//	System.out.println("BROKEN PACKET");
+				}
+				}
+				*/	
+			}else if(messages[0].equals("RECONN")){
+				// Man in the middle function, wag muna pansinin
+		
+			}	
+
+	}
+6. Uncomment line 68 on GameCommunicator.java:
+
+	GameWindow.getMessageContent(new String(buffer));
+
+7. Add this on the action listener for the deploying of troops
+				//Lahat ng temp.something ay mangagagaling na attribute sa Troop class mo.
+
+				String msg = "TROOP#"+temp.gameID+"#"+temp.name+"#"+temp.xcoor+"#"+temp.ycoor+"#"+id+"#"+temp.name;
+				
+				Characters.aktvplayer.troop_count++;
+			
+				gc.sendMessage(msg.getBytes());
+
+
