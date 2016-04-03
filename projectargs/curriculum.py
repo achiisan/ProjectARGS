@@ -1,16 +1,60 @@
 #!/usr/bin/python
 
-#CURRIRULUUM
+from parser import Parser
+import database
+#Curriculum functions
 
-from subject import Subject
+#Get curriculum from file and save it on (Runtime memory DB and persisitent disk DB)
+
+def loadCurriculum(curriculum):
+
+	bfr = Parser.fileread("../Curriculum-list/"+curriculum+".csv")
+
+	semesters = bfr.split("#")
+	database.query("CREATE TABLE IF NOT EXISTS curriculum (name TEXT, course TEXT, college TEXT)")
+
+	database.query("CREATE TABLE IF NOT EXISTS '"+curriculum+"' (courseID TEXT PRIMARY_KEY, semester INTEGER, year INTEGER)")
+	database.query("CREATE TABLE IF NOT EXISTS '"+curriculum+"-prerequisites' (courseID TEXT, parentcourseID TEXT)")
+
+	parseSemInfo = False
+
+	for semester in semesters:
+		
+
+		
+		
+
+		#GET SEMESTER INFORMATION
+		if(parseSemInfo == False):
+			info = semester.split(",")
+
+			database.query("INSERT INTO curriculum VALUES ('"+info[0].strip()+"', '"+info[1].strip()+"', '"+info[2].strip()+"')")
+			parseSemInfo = True
+
+		#AFFIX SEMESTER SUBJECTS
+		else:	
+			lists = semester.split("\n") # separate per line
+			i = 3
+			semInfo = lists[1].split(",") #get contents of FIRST line (semester, year)
+			print(semInfo)
+			for i in range(2,len(lists)-1): #the succeeding lines determines the subject on that sem and its prerequisites
+				info = lists[i].split(",")
+				#save subject in DB
+				database.query("INSERT INTO '"+curriculum+"' VALUES ('"+info[0]+"', "+semInfo[1]+", "+semInfo[0	]+")")
+				for j in range(1, len(info)):
+					if(info[j] != ''):
+						database.query("INSERT INTO '"+curriculum+"-prerequisites' VALUES ('"+info[j]+"', '"+info[0]+"')")
+		print("====END SEMESTER===")
+		
+	r.commit()
+
+	database.savetofile("curriculum.db")
+
+def accessCurriculumSubject(curriculum):
+
+def accessCurriculum():
+	print("Tester4")
+	buf = database.query("SELECT * FROM curriculum");
+	return buf
 
 
-class Curriculum:
-	curriculumlist = [] #LIST OF ALL CURRICULA LOADED IN RUNTIME
-
-	
-	
-	def __init__(self):
-		self.semesterlist = [] #LIST OF ALL SEMESTERS		
-
-	

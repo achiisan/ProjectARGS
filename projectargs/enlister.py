@@ -2,6 +2,7 @@
 
 from parser import Parser
 from curriculum import Curriculum
+import database
 #===========================================
 #ENLIST FUNCTION
 
@@ -16,8 +17,16 @@ class Enlister:
 	#run on BSCS-2011-SP-PR curriculum only.
 
 	#Implementation should SCAN all curriculum on Database
+		buf = database.accessCurriculum()
 
-	
+		for entry in buf:
+			print(entry)
+
+	@staticmethod
+	def generateSubjectParseTree(curriculum, term): #generate a parse tree given a curriculum and a term
+		print("X")
+
+		
 		
 
 
