@@ -3,6 +3,22 @@
 	{
 		"selected_items":
 		[
+			[
+				"class",
+				"classinfo"
+			],
+			[
+				"subject",
+				"subjecttrees"
+			],
+			[
+				"subje",
+				"subjecttrees"
+			],
+			[
+				"loa",
+				"loadCurriculum"
+			]
 		]
 	},
 	"buffers":
@@ -11,53 +27,15 @@
 			"file": "parser.py",
 			"settings":
 			{
-				"buffer_size": 320,
+				"buffer_size": 318,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "#!/usr/bin/python\n\n#==========================================================\n#DATABASE FUNCTION\n# INSERT, DELETE, CREATE TABLE TO DATABASE\n\n\nimport sqlite3\nimport sqlitebck\nfrom parser import  Parser\n\nclass Database:\n\n		def __init__(self):\n			self.r = sqlite3.connect(\":memory:\")\n			loadfromfile()\n			loadfromfile(\"curriculum\")\n			print(\"Database Opened Successfully\")\n\n		#save to main DB\n		def savetofile(self):\n			filedb = sqlite3.connect(\"../database/projectargs.db\");\n			sqlitebck.copy(self.r, filedb)\n		def loadfromfile(self):\n			filedb = sqlite3.connect(\"../database/projectargs.db\");\n			sqlitebck.copy(filedb, self.r)\n\n		#save to a custom DB\n		def savetofile(self, filename):\n			filedb = sqlite3.connect(\"../database/\"+filename);\n			sqlitebck.copy(self.r, filedb)\n		def loadfromfile(self, filename):\n			filedb = sqlite3.connect(\"../database/\"+filename);\n			sqlitebck.copy(filedb, self.r)\n\n\n		def accessStudentList(self, name):\n			print(\"Tester\")\n\n		def accessStudentList(self):\n			print(\"Tester2\")\n		\n		def accessClasslist(self, classname):\n			print(\"Tester3\")\n\n		def accessCurriculumList(self):\n			print(\"Tester4\")\n\n		def accessCurriculum(self):\n			print(\"Tester4\")\n			buf = self.r.execute(\"SELECT * FROM curriculum\")\n			print(buf)\n\n#=======================INITIAL FILES PARSER / SAVER\n		def loadClasslist(self):\n			filebuf = Parser.fileread(\"../schedule-list/classlist-2015-1.csv\")\n			classlist = filebuf.split(\"\\n\")\n\n			self.r.execute(\"CREATE TABLE IF NOT EXISTS subjectlist (coursecode TEXT, section TEXT, class_size INTEGER, time TEXT, day TEXT, room TEXT, pri_instructor TEXT, sec_instructor TEXT)\")\n			self.r.commit()\n			for cls in classlist:\n\n\n				contents = cls.split(\",\")\n\n\n				if len(contents) > 1:\n					print(len(contents))\n					self.r.execute(\"INSERT INTO subjectlist (coursecode, section, class_size, time, day, room, pri_instructor, sec_instructor) VALUES ('\"+contents[0]+\"','\"+contents[1]+\"','\"+contents[2]+\"','\"+contents[3]+\"','\"+contents[4]+\"','\"+contents[5]+\"','\"+contents[6]+\"','\"+contents[7]+\"')\")\n					self.r.commit()\n\n			self.savetofile()\n\n\n		def loadStudentList(self):\n			filebuf = Parser.fileread(\"../fwdanonymizeddata/anon_PREDICTIONS\")\n\n			splitter = filebuf.split(\"###\")\n\n			students = splitter[1].split(\"#\")\n			count = 0;\n			self.r.execute(\"CREATE TABLE IF NOT EXISTS studentlist (stdno TEXT, name TEXT, gender TEXT, country INTEGER, curriculum TEXT, scholarship TEXT, college TEXT, earned INTEGER, classif INTEGER, yearlevel INTEGER, allowed INTEGER,  grp TEXT, npriority INTEGER, nalternates INTEGER, ncurrent INTEGER)\")\n			self.r.commit()\n\n			for student in students:\n				#print(student)\n				studinfo = student.split(\"\\n\")\n				gotInfo = False\n				for info in studinfo:\n					if info.strip() != '' :\n						ic = info.split(\",\")\n						if gotInfo == False:\n							self.r.execute(\"INSERT INTO studentlist VALUES('\"+ic[0]+\"','\"+ic[1]+\"','\"+ic[2]+\"',\"+ic[3]+\",'\"+ic[4]+\"','\"+ic[5]+\"','\"+ic[6]+\"',\"+ic[7]+\",\"+ic[8]+\",\"+ic[9]+\",\"+ic[10]+\",\"+ic[11]+\",\"+ic[12]+\",\"+ic[13]+\",\"+ic[14]+\")\")\n							count = count + 1\n							print(chr(27) + \"[2J\")\n							print(\"Saving Student#: \",count)\n							gotInfo = True\n							self.r.execute(\"CREATE TABLE IF NOT EXISTS'\"+ic[0]+\"' (SCHOOL YEAR TEXT, TERM TEXT, COURSE TEXT,SECTION TEXT, UNITS TEXT, GRADE TEXT, COURSERANK TEXT, CONTRIB TEXT)\")\n						else:\n							self.r.execute(\"INSERT INTO '\"+ic[0]+ \"' VALUES('\"+ic[1]+\"','\"+ic[2]+\"','\"+ic[3]+\"','\"+ic[4]+\"','\"+ic[5]+\"','\"+ic[6]+\"','\"+ic[7]+\"','\"+ic[8]+\"')\")\n\n			self.r.commit()\n\n			self.savetofile()\n\n		\n		def loadCurriculum(self, curriculum):\n\n			bfr = Parser.fileread(\"../Curriculum-list/\"+curriculum+\".csv\")\n\n			semesters = bfr.split(\"#\")\n			self.r.execute(\"CREATE TABLE IF NOT EXISTS curriculum (name TEXT, course TEXT, college TEXT)\")\n\n			self.r.execute(\"CREATE TABLE IF NOT EXISTS '\"+curriculum+\"' (courseID TEXT PRIMARY_KEY, semester INTEGER, year INTEGER)\")\n			self.r.execute(\"CREATE TABLE IF NOT EXISTS '\"+curriculum+\"-prerequisites' (courseID TEXT, parentcourseID TEXT)\")\n\n			parseSemInfo = False\n\n			for semester in semesters:\n				\n\n				\n				\n\n				#GET SEMESTER INFORMATION\n				if(parseSemInfo == False):\n					info = semester.split(\",\")\n\n					self.r.execute(\"INSERT INTO curriculum VALUES ('\"+info[0].strip()+\"', '\"+info[1].strip()+\"', '\"+info[2].strip()+\"')\")\n					parseSemInfo = True\n\n				#AFFIX SEMESTER SUBJECTS\n				else:	\n					lists = semester.split(\"\\n\") # separate per line\n					i = 3\n					semInfo = lists[1].split(\",\") #get contents of FIRST line (semester, year)\n					print(semInfo)\n					for i in range(2,len(lists)-1): #the succeeding lines determines the subject on that sem and its prerequisites\n						info = lists[i].split(\",\")\n						#save subject in DB\n						self.r.execute(\"INSERT INTO '\"+curriculum+\"' VALUES ('\"+info[0]+\"', \"+semInfo[0]+\", \"+semInfo[1]+\")\")\n						for j in range(1, len(info)):\n							if(info[j] != ''):\n								self.r.execute(\"INSERT INTO '\"+curriculum+\"-prerequisites' VALUES ('\"+info[j]+\"', '\"+info[0]+\"')\")\n				print(\"====END SEMESTER===\")\n				\n			self.r.commit()\n\n			self.savetofile(\"curriculum.db\")\n\n\n			\n		\n",
 			"file": "database.py",
-			"file_size": 5088,
-			"file_write_time": 131038961197314511,
 			"settings":
 			{
-				"buffer_size": 5074,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "curriculum.py",
-			"settings":
-			{
-				"buffer_size": 221,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "semester.py",
-			"settings":
-			{
-				"buffer_size": 161,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "subject.py",
-			"settings":
-			{
-				"buffer_size": 135,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "Initial Plans for ProjectArgs\n\n- Parse Initial Data (ok)\n- Assume missing data -> Form functions for:\n	Adding a curriculum (parse from csv) (ok)\n	Adding subjects on classlist (Parse from csv) (ok)\n	Adding subjects as GE subject / Elective (GE / Elective Masterlist)\n	** Assume random GE / Elective Subjects for a certain student\n- Create priority list\n- Schedule using backtracking\n- Schedule using Genetic Algorithm\n- UI / Web Interface\n\n==========================================================================================================\n==Predict==	\n-Generate Predictions file (Like in the ANON_Predictions file)\n\n\n==ENLIST==\n-Backtracking Major Subjects	\n	Create n schedules of data (Perfect scheduler)\n		Enlist students there based on priority\n			Check if they are valid to enlist the subject\n				if not do not enlist\n			Check if some subjects in the predictions list are not enlisted. \n				Try to enlist them if there are any\n\n-Genetic Algorithm	\n\n==GENERATE==\n-FORM 5 DATA\n-UI / Web Interface",
-			"file": "Flowchar",
-			"file_size": 1000,
-			"file_write_time": 131037095817048982,
-			"settings":
-			{
-				"buffer_size": 1005,
+				"buffer_size": 858,
 				"line_ending": "Unix"
 			}
 		},
@@ -70,10 +48,10 @@
 			}
 		},
 		{
-			"file": "main.py",
+			"file": "classlist.py",
 			"settings":
 			{
-				"buffer_size": 265,
+				"buffer_size": 1269,
 				"line_ending": "Unix"
 			}
 		},
@@ -81,7 +59,55 @@
 			"file": "enlister.py",
 			"settings":
 			{
-				"buffer_size": 429,
+				"buffer_size": 1107,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "main.py",
+			"settings":
+			{
+				"buffer_size": 374,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "curriculum.py",
+			"settings":
+			{
+				"buffer_size": 1929,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "subjecttree.py",
+			"settings":
+			{
+				"buffer_size": 1174,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "schedulebucket.py",
+			"settings":
+			{
+				"buffer_size": 78,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "schedulemap.py",
+			"settings":
+			{
+				"buffer_size": 53,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "studentlist.py",
+			"settings":
+			{
+				"buffer_size": 1735,
 				"line_ending": "Unix"
 			}
 		}
@@ -118,13 +144,21 @@
 	},
 	"file_history":
 	[
+		"/home/achiisan/ProjectARGS/projectargs/Flowchar",
+		"/home/achiisan/CMSC 142/Exer Graph Coloring/graph_exer.c",
+		"/home/achiisan/ProjectARGS/projectargs/schedulebuckets.py",
+		"/home/achiisan/ProjectARGS/schedule-list/classlist-2015-1.csv",
+		"/home/achiisan/ProjectARGS/fwdanonymizeddata/anon_FORM5-2015-FIRST-1-NF",
+		"/home/achiisan/ProjectARGS/fwdanonymizeddata/anon_ENLISTMENT-2",
 		"/home/achiisan/ProjectARGS/fwdanonymizeddata/anon_PREDICTIONS",
+		"/home/achiisan/ProjectARGS/projectargs/semester.py",
+		"/home/achiisan/ProjectARGS/projectargs/subject.py",
+		"/home/achiisan/ProjectARGS/projectargs/curriculum.py",
+		"/home/achiisan/ProjectARGS/projectargs/test.py",
 		"/home/achiisan/workspace/137-Client-Test/How to Connect to Server.txt",
 		"/home/achiisan/ProjectARGS/fwdanonymizeddata/anon_ENLISTMENT-5",
 		"/home/achiisan/ProjectARGS/fwdanonymizeddata/anon_ENLISTMENT-4",
 		"/home/achiisan/ProjectARGS/fwdanonymizeddata/anon_ENLISTMENT-3",
-		"/home/achiisan/ProjectARGS/fwdanonymizeddata/anon_ENLISTMENT-2",
-		"/home/achiisan/ProjectARGS/schedule-list/classlist-2015-1.csv",
 		"/home/achiisan/ProjectARGS/Documentation Manuals/rediscommands.txt",
 		"/home/achiisan/CMSC129/githubrepo/submissions/doron/tokengenerator.py",
 		"/home/achiisan/CMSC129/githubrepo/submissions/exercise2/readme.md",
@@ -132,7 +166,7 @@
 	],
 	"find":
 	{
-		"height": 37.0
+		"height": 21.0
 	},
 	"find_in_files":
 	{
@@ -146,6 +180,14 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"parsetree",
+			"			",
+			"r.commit",
+			"r.execute",
+			"self",
+			"self,",
+			"self",
+			"self.r"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -153,6 +195,10 @@
 		"regex": false,
 		"replace_history":
 		[
+			"database.commit",
+			"database.query",
+			"",
+			"r"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -163,7 +209,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -172,15 +218,164 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 320,
+						"buffer_size": 318,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								117,
-								117
+								116,
+								116
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "database.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 858,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								771,
+								771
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/home/achiisan/ProjectARGS/Curriculum-list/BSCS-2011-SP-PR.csv",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 607,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								81,
+								81
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "classlist.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1269,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								407,
+								407
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 21.0,
+						"translation.y": -0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "enlister.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1107,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								764,
+								764
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 195.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 5,
+					"file": "main.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 374,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								374,
+								374
 							]
 						],
 						"settings":
@@ -195,20 +390,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "database.py",
+					"buffer": 6,
+					"file": "curriculum.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5074,
+						"buffer_size": 1929,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5066,
-								5066
+								668,
+								668
 							]
 						],
 						"settings":
@@ -217,27 +412,84 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1980.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 9,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "curriculum.py",
+					"buffer": 7,
+					"file": "subjecttree.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 221,
+						"buffer_size": 1174,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								17,
-								17
+								899,
+								899
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 390.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "schedulebucket.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 78,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								78,
+								78
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "schedulemap.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 53,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								53,
+								53
 							]
 						],
 						"settings":
@@ -252,81 +504,26 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "semester.py",
+					"buffer": 10,
+					"file": "studentlist.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 161,
+						"buffer_size": 1735,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								160,
-								160
+								337,
+								337
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "subject.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 135,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								135,
-								135
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "Flowchar",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1005,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								143,
-								143
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -334,103 +531,13 @@
 					},
 					"stack_index": 5,
 					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "/home/achiisan/ProjectARGS/Curriculum-list/BSCS-2011-SP-PR.csv",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 607,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5,
-								5
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 0,
-			"sheets":
-			[
-				{
-					"buffer": 7,
-					"file": "main.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 265,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								81,
-								81
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "enlister.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 429,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								273,
-								273
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
 				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 26.0
+		"height": 21.0
 	},
 	"input":
 	{
@@ -474,7 +581,7 @@
 	"project": "ProjectARGS.sublime-project",
 	"replace":
 	{
-		"height": 48.0
+		"height": 38.0
 	},
 	"save_all_on_build": true,
 	"select_file":

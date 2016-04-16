@@ -2,9 +2,11 @@
 
 from parser import Parser
 import database
+
+
 #Curriculum functions
 
-#Get curriculum from file and save it on (Runtime memory DB and persisitent disk DB)
+#Get curriculum from file and save it on (Runtime memory DB and persistent disk DB)
 
 def loadCurriculum(curriculum):
 
@@ -12,7 +14,6 @@ def loadCurriculum(curriculum):
 
 	semesters = bfr.split("#")
 	database.query("CREATE TABLE IF NOT EXISTS curriculum (name TEXT, course TEXT, college TEXT)")
-
 	database.query("CREATE TABLE IF NOT EXISTS '"+curriculum+"' (courseID TEXT PRIMARY_KEY, semester INTEGER, year INTEGER)")
 	database.query("CREATE TABLE IF NOT EXISTS '"+curriculum+"-prerequisites' (courseID TEXT, parentcourseID TEXT)")
 
@@ -20,10 +21,6 @@ def loadCurriculum(curriculum):
 
 	for semester in semesters:
 		
-
-		
-		
-
 		#GET SEMESTER INFORMATION
 		if(parseSemInfo == False):
 			info = semester.split(",")
@@ -46,15 +43,19 @@ def loadCurriculum(curriculum):
 						database.query("INSERT INTO '"+curriculum+"-prerequisites' VALUES ('"+info[j]+"', '"+info[0]+"')")
 		print("====END SEMESTER===")
 		
-	r.commit()
+	database.commit()
 
 	database.savetofile("curriculum.db")
 
-def accessCurriculumSubject(curriculum):
-
-def accessCurriculum():
-	print("Tester4")
-	buf = database.query("SELECT * FROM curriculum");
+def accessCurriculum(curr, year ,term):
+	print(curr)
+	print(year)
+	print(term)
+	buf = database.query("SELECT * FROM '"+curr+"' WHERE year = "+str(year)+" AND semester = "+str(term))
 	return buf
 
+def getCurriculumList():
+	
+	buf = database.query("SELECT * FROM curriculum");
+	return buf
 

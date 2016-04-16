@@ -1,18 +1,23 @@
 #!/usr/bin/python
 
 import database
-from enlister import Enlister
-
+import classlist
+import studentlist
+import curriculum
+import enlister
 
 
 
 #=========================LOAD INITIAL FILES
 
 
-#r.loadClasslist()
-#r.loadStudentList()
+#classlist.loadClasslist()
+#curriculum.loadCurriculum("BSCS-2011-SP-PR")
+#studentlist.loadStudentList()
 
 
-#database.loadCurriculum("BSCS-2011-SP-PR")
+########################################################
+#Enlisting functions here
 
-Enlister.generateSchedule()
+
+enlister.generateSchedule()

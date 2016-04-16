@@ -2,7 +2,7 @@ Initial Plans for ProjectArgs
 
 - Parse Initial Data (ok)
 - Assume missing data -> Form functions for:
-	Adding a curriculum (parse from csv)
+	Adding a curriculum (parse from csv) (ok)
 	Adding subjects on classlist (Parse from csv) (ok)
 	Adding subjects as GE subject / Elective (GE / Elective Masterlist)
 	** Assume random GE / Elective Subjects for a certain student
