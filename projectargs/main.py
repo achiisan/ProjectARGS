@@ -11,7 +11,7 @@ import enlister
 #=========================LOAD INITIAL FILES
 
 
-#classlist.loadClasslist()
+classlist.loadClasslist()
 #curriculum.loadCurriculum("BSCS-2011-SP-PR")
 #studentlist.loadStudentList()
 
@@ -20,4 +20,4 @@ import enlister
 #Enlisting functions here
 
 
-enlister.generateSchedule()
+#enlister.generateSchedule()

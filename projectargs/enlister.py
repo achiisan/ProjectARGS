@@ -32,10 +32,10 @@ def generateSchedule():
 		print("Generate a bucket for "+parsetrees)
 		subjecttree.subjecttrees[parsetrees].generateBuckets([],1)
 		
-#		for k in subjecttree.subjecttrees[parsetrees].buckets:
-#			print("Bucket:")
-#			for elements in k:
-#				print(elements.classinfo)
+		for k in subjecttree.subjecttrees[parsetrees].buckets:
+			print("Bucket:")
+			for elements in k:
+				print(elements.classinfo)
 
 		print(len(subjecttree.subjecttrees[parsetrees].buckets))
 			
