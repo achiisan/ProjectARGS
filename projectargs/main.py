@@ -5,13 +5,14 @@ import classlist
 import studentlist
 import curriculum
 import enlister
+import subjecttree
 
 
 
 #=========================LOAD INITIAL FILES
 
 
-classlist.loadClasslist()
+#classlist.loadClasslist()
 #curriculum.loadCurriculum("BSCS-2011-SP-PR")
 #studentlist.loadStudentList()
 
@@ -21,3 +22,5 @@ classlist.loadClasslist()
 
 
 #enlister.generateSchedule()
+
+subjecttree.calculatetimeframe("7-8:30", "Mon")
