@@ -41,3 +41,15 @@ def loadStudentList():
 	database.commit()
 
 	database.savetofile()
+
+def getStudentViaCurriculum(curriculum, classif):
+
+	buf = database.query("SELECT * FROM studentlist WHERE curriculum = '"+curriculum+"' AND classif = "+str(classif)+" ORDER BY grp")
+
+	return buf
+
+def getStudentRecommendedCourses(studentno):
+
+	buf = database.query ("SELECT * FROM '"+studentno+"'")
+
+	return buf

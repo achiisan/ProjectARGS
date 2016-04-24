@@ -6,7 +6,7 @@ import studentlist
 import curriculum
 import enlister
 import subjecttree
-
+from intervaltree import IntervalTree
 
 
 #=========================LOAD INITIAL FILES
@@ -21,6 +21,6 @@ import subjecttree
 #Enlisting functions here
 
 
-#enlister.generateSchedule()
+enlister.init()
+enlister.enlist()
 
-subjecttree.calculatetimeframe("7-8:30", "Mon")

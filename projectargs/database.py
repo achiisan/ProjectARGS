@@ -43,6 +43,6 @@ def accessClasslist(classname):
 
 
 		
-loadfromfile()
-loadfromfile("curriculum.db")
+loadfromfile("projectargs.db")
+#loadfromfile("curriculum.db")
 print("Database Opened Successfully")	

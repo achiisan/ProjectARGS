@@ -2,20 +2,21 @@
 
 
 import classlist
-
+from intervaltree import IntervalTree
 
 
 subjecttrees = { }
 
 class SubjectTree:
 
-	def __init__(self, curr, term):
+	def __init__(self, curr, year):
 		self.curriculum = curr
-		self.term = term
+		self.year = year
 		self.tree = []
 		self.height = 0
 		self.tree.append(ClassNode(None, self.height, None)) #root node
 		self.buckets = []
+		self.it_buckets = []
 		
 
 
@@ -49,36 +50,77 @@ class SubjectTree:
 
 		return leaves
 
-	def generateBuckets(self,bucket,height): #preorder traversal
+	def generateBuckets(self,bucket,height, tree): #preorder traversal
 			bucketz = bucket
 
 			hasElements = False
 			for elements in self.tree:
 				if elements.height == height:
-					hasElements = True
-					#time = elements.classinfo[4].split("-");
+					hasElements = True #yung papasok kasi sa if na ito ay kapag yung height na specified ay nasa current tree pa
+					temptree = tree.copy()
+					timeframe = calculatetimeframe(elements.classinfo[3], elements.classinfo[4])
+					elements.time = timeframe
+					hasoverlap = False
+					if timeframe != -1:
+						for time in timeframe:
+							if tree.overlaps(time[0],time[1]) == False:
+								tree[time[0]:time[1]] = elements
+							else:
+								hasoverlap = True
 
+					if hasoverlap == True:
+
+						tree = temptree
+						continue
+
+					
 					bucketz.append(elements)
 					lecComp = classlist.getLecture(elements.classinfo[0], elements.classinfo[9])
 					lectureadded = False
+
+					#if there is a lecture component add it on the schedule
 					for entry in lecComp:
-						bucketz.append(ClassNode(entry,0,None))
+						temp = ClassNode(entry,0,None)
+						timeframe = calculatetimeframe(entry[3], entry[4])
+						temp.time = timeframe
+						if timeframe != -1:
+							for time in timeframe:
+								if tree.overlaps(time[0],time[1]) == False:
+									tree[time[0]:time[1]] = temp
+								else:
+									hasoverlap = True
+						
+						bucketz.append(temp)
 						lectureadded = True
-					ret = self.generateBuckets(bucketz, height+1)
-					bucketz.pop()
-					if lectureadded == True:
+
+					if hasoverlap == True:
 						bucketz.pop()
+						bucketz.pop()
+						tree = temptree
+						continue
+
+
+					#recursive function
+					ret = self.generateBuckets(bucket, height+1, tree)
 					
+
+					get = bucketz.pop()
+				
+					if lectureadded == True:
+						get = bucketz.pop()
+					
+					tree = temptree
+					
+
 					
 			if hasElements == False:
 				self.createBucket(bucketz)
+				self.it_buckets.append(tree)
 				return 22
 
 	def createBucket(self,bucket):
 		self.buckets.append([])
-	#	print("Create bucket:")
 		for elements in bucket:
-	#		print(elements.classinfo)
 			self.buckets[len(self.buckets)-1].append(elements)
 	
 
@@ -92,6 +134,7 @@ class ClassNode: #subject node in parse tree (used in subjectree.py)
 			self.classinfo = classinfo
 			self.parent = None
 			self.height = height
+			self.time = None
 
 
 
@@ -100,10 +143,12 @@ class ClassNode: #subject node in parse tree (used in subjectree.py)
 ###################################################
 def calculatetimeframe(time, day):
 
+	if time == "TBA"  or day == "TBA":
+		return -1
 	days = getequivalentDay(day)
-
+	ret = []
 	for day in days:		
-
+		r = []
 		d = day*43
 
 		splitted = time.split("-")	
@@ -115,7 +160,8 @@ def calculatetimeframe(time, day):
 		if len(splitsecond) > 1:
 			minute = milmin(splitsecond[1])
 		blockid = d+ ((hour-7) * 4) + minute
-		print(blockid)
+		#print(blockid)
+		r.append(blockid)
 
 
 		#get upper bound
@@ -125,7 +171,13 @@ def calculatetimeframe(time, day):
 		if len(splitsecond) > 1:
 			minute = milmin(splitsecond[1])
 		blockid = d+ ((hour-7) * 4) + minute
-		print(blockid)
+		#print(blockid)
+		r.append(blockid)
+		ret.append(r)
+
+	return ret
+
+
 
 
 def milhourLB(hour):

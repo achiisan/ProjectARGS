@@ -45,7 +45,7 @@ def loadCurriculum(curriculum):
 		
 	database.commit()
 
-	database.savetofile("curriculum.db")
+	database.savetofile()
 
 def accessCurriculum(curr, year ,term):
 	print(curr)
