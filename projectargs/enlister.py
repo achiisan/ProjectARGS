@@ -5,9 +5,11 @@ import curriculum
 import classlist
 import subjecttree
 import studentlist
+import mongo_database
 
 from subjecttree import SubjectTree
 from intervaltree import IntervalTree
+from schedulemap import ScheduleMap
 
 #===========================================
 #ENLIST FUNCTION
@@ -46,12 +48,24 @@ def enlist():
 
 	for parsetrees in subjecttree.subjecttrees:
 		st = subjecttree.subjecttrees[parsetrees]
+		bucketindex = 0
 		stdlist = studentlist.getStudentViaCurriculum(st.curriculum, st.year)
 		for student in stdlist:
-			
 			recomm = studentlist.getStudentRecommendedCourses(student[0])
+			courses_list = {}
 			for course in recomm:
-				print(course)
+				courses_list[course[0]] = 1
+
+			bucket = st.it_buckets[bucketindex]
+			enlistcompleted = False
+
+			stud = ScheduleMap(student[0])
+
+			while  enlistcompleted == False:
+				for item in bucket.items():
+					if courses_list[item.data.classinfo[0]]	!= 1:
+					
+						print("Yey")
 
 
 

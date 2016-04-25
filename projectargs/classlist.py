@@ -3,6 +3,7 @@
 import database
 import re #regex
 from parser import Parser
+import mongo_database
 
 #Classlist function (LIST OF ALL CLASSES TO BE OFFERED IN A SEMESTER)
 #Take note that THIS IS DIFFERENT FROM the SUBJECTS in the curriculum, as
@@ -14,6 +15,7 @@ classes = {}
 #load classlist from file 
 
 def loadClasslist():
+	print("=================Loading Classlist..==================\n")
 	filebuf = Parser.fileread("../schedule-list/classlist-2015-1.csv")
 	classlist = filebuf.split("\n")
 
@@ -32,10 +34,11 @@ def loadClasslist():
 
 		if len(contents) > 1:
 
-			print(contents[1])		
+			
 			if re.match("[A-Za-z0-9]*\-[0-9]*[LR]", contents[1] ):
 				#print("Recit")
 				database.query("INSERT INTO subjectlist (coursecode, section, class_size, time, day, room, pri_instructor, sec_instructor, avail_slots, lecture_comp) VALUES ('"+contents[0]+"','"+contents[1]+"',"+contents[2]+",'"+contents[3]+"','"+contents[4]+"','"+contents[5]+"','"+contents[6]+"','"+contents[7]+"',"+contents[2]+",'"+tempLecture[1]+"')")
+				
 				if lectureDeleted == False:
 					database.query("DELETE FROM subjectlist WHERE coursecode = '"+tempLecture[0]+"' AND section = '"+tempLecture[1]+"'")
 					database.query("INSERT INTO subjectlist_lecture (coursecode, section, class_size, time, day, room, pri_instructor, sec_instructor, avail_slots) VALUES ('"+tempLecture[0]+"','"+tempLecture[1]+"',"+tempLecture[2]+",'"+tempLecture[3]+"','"+tempLecture[4]+"','"+tempLecture[5]+"','"+tempLecture[6]+"','"+tempLecture[7]+"',"+tempLecture[2]+")")
@@ -47,9 +50,32 @@ def loadClasslist():
 				tempLecture = contents
 				lectureDeleted = False
 				database.query("INSERT INTO subjectlist (coursecode, section, class_size, time, day, room, pri_instructor, sec_instructor, avail_slots, lecture_comp) VALUES ('"+contents[0]+"','"+contents[1]+"',"+contents[2]+",'"+contents[3]+"','"+contents[4]+"','"+contents[5]+"','"+contents[6]+"','"+contents[7]+"',"+contents[2]+",'None')")
+				
 	database.commit()
 
 	database.savetofile()
+	print("=================Loading Complete..==================\n")
+	createSlots()
+
+def createSlots():
+	print("=================Creating Slots..==================\n")
+	filebuf = Parser.fileread("../schedule-list/classlist-2015-1.csv")
+	classlist = filebuf.split("\n")
+	data = []
+
+	for cls in classlist:
+
+
+		contents = cls.split(",")
+
+
+		if len(contents) > 1:
+			d = createData(contents[0]+"-"+contents[1], int(contents[2]))
+			data.append(d)
+	
+	mongo_database.addtoCollection("slots", data)
+
+
 
 def getClass(coursecode):
 	buf = database.query("SELECT * FROM subjectlist WHERE COURSECODE = '"+coursecode+"'")
@@ -60,6 +86,14 @@ def getLecture(coursecode, section):
 	buf = database.query("SELECT * FROM subjectlist_lecture WHERE COURSECODE = '"+coursecode+"' AND SECTION = '"+section+"'")
 
 	return buf
+
+def createData(coursecode, classsize):
+	slots = []
+	for i in range(0, classsize):
+		slots.append(i)
+
+	data = {"subjectid":coursecode, "slots": slots}
+	return data
 
 
 

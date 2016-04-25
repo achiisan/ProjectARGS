@@ -3,6 +3,8 @@
 from intervaltree import IntervalTree
 #Class for a schedule of a student
 
+schedules = { }
+
 class ScheduleMap:
 
 	def __init__(self, studentno):
@@ -10,5 +12,5 @@ class ScheduleMap:
 		self.studentno = studentno
 
 	def enlistFromBucket(bucket):
-		
 		print("X")
+		

@@ -6,6 +6,7 @@ import studentlist
 import curriculum
 import enlister
 import subjecttree
+import mongo_database
 from intervaltree import IntervalTree
 
 
@@ -23,4 +24,10 @@ from intervaltree import IntervalTree
 
 enlister.init()
 enlister.enlist()
+
+
+#ret = mongo_database.getSlot("AEC 1-T-4R")
+	#if ret["nModified"] == 0 or ret["updatedExisting"] == False:
+	#	print("No Records to Modify.")
+	#	break
 
