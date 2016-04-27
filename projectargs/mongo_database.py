@@ -11,10 +11,15 @@ def addtoCollection(collection,data):
 def getSlot(subjectid):
 	post_id = db.slots.update({"subjectid": subjectid}, { "$pop" : {"slots": -1}})
 
-	print(post_id)
-
 	return post_id
 
 client = MongoClient()
 db = client.projectargs
+
+
+def checkSlot(subjectid):
+	post_id = db.slots.find({"subjectid": subjectid})	
+
+	for el in post_id:
+		return el
 

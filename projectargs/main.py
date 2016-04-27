@@ -21,6 +21,7 @@ from intervaltree import IntervalTree
 ########################################################
 #Enlisting functions here
 
+classlist.createSlots()
 
 enlister.init()
 enlister.enlist()

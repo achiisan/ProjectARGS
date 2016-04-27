@@ -3,6 +3,8 @@
 
 import database
 from parser import Parser
+import json
+
 
 #List of all students in the database. The load student list LOADS a PREDICTION 
 #file from REGIST. This will be the basis for the prediction of ARGS
@@ -12,7 +14,7 @@ from parser import Parser
 
 
 def loadStudentList():
-	filebuf = Parser.fileread("../fwdanonymizeddata/anon_PREDICTIONS")
+	filebuf = Parser.fileread("../fwdanonymizeddata/PREDICTIONS")
 
 	splitter = filebuf.split("###")
 
@@ -28,28 +30,37 @@ def loadStudentList():
 		for info in studinfo:
 			if info.strip() != '' :
 				ic = info.split(",")
+				print(chr(27) + "[2J")
+				print(ic[1].replace("'","''"))
 				if gotInfo == False:
-					database.query("INSERT INTO studentlist VALUES('"+ic[0]+"','"+ic[1]+"','"+ic[2]+"',"+ic[3]+",'"+ic[4]+"','"+ic[5]+"','"+ic[6]+"',"+ic[7]+","+ic[8]+","+ic[9]+","+ic[10]+","+ic[11]+","+ic[12]+","+ic[13]+","+ic[14]+")")
+
+					database.query("INSERT INTO studentlist VALUES('"+ic[0]+"','"+ic[1].replace("'","''")+"','"+ic[2]+"',"+ic[3]+",'"+ic[4]+"','"+ic[5]+"','"+ic[6]+"',"+ic[7]+","+ic[8]+","+ic[9]+","+ic[10]+","+ic[11]+","+ic[12]+","+ic[13]+","+ic[14]+")")
 					count = count + 1
-					print(chr(27) + "[2J")
+					
 					print("Saving Student#: ",count)
 					gotInfo = True
 					database.query("CREATE TABLE IF NOT EXISTS'"+ic[0]+"' (SCHOOL YEAR TEXT, TERM TEXT, COURSE TEXT,SECTION TEXT, UNITS TEXT, GRADE TEXT, COURSERANK TEXT, CONTRIB TEXT)")
 				else:
-					database.query("INSERT INTO '"+ic[0]+ "' VALUES('"+ic[1]+"','"+ic[2]+"','"+ic[3]+"','"+ic[4]+"','"+ic[5]+"','"+ic[6]+"','"+ic[7]+"','"+ic[8]+"')")
+					database.query("INSERT INTO '"+ic[0]+ "' VALUES('"+ic[1].replace("'","''")+"','"+ic[2]+"','"+ic[3]+"','"+ic[4]+"','"+ic[5]+"','"+ic[6]+"','"+ic[7]+"','"+ic[8]+"')")
 
 	database.commit()
 
 	database.savetofile()
 
-def getStudentViaCurriculum(curriculum, classif):
+def getStudentViaCurriculum(curriculum, yearlevel):
 
-	buf = database.query("SELECT * FROM studentlist WHERE curriculum = '"+curriculum+"' AND classif = "+str(classif)+" ORDER BY grp")
+	buf = database.query("SELECT * FROM studentlist WHERE curriculum = '"+curriculum+"' AND yearlevel = "+str(yearlevel)+" ORDER BY grp")
 
 	return buf
 
 def getStudentRecommendedCourses(studentno):
 
 	buf = database.query ("SELECT * FROM '"+studentno+"'")
+
+	return buf
+
+def getAllStudentsByGroup():
+
+	buf = database.query("SELECT * FROM studentlist ORDER BY grp")
 
 	return buf

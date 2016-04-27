@@ -10,7 +10,4 @@ class ScheduleMap:
 	def __init__(self, studentno):
 		self.schedule = IntervalTree()
 		self.studentno = studentno
-
-	def enlistFromBucket(bucket):
-		print("X")
 		

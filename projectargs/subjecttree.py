@@ -17,6 +17,7 @@ class SubjectTree:
 		self.tree.append(ClassNode(None, self.height, None)) #root node
 		self.buckets = []
 		self.it_buckets = []
+		self.bucketcounter = 0
 		
 
 
@@ -270,3 +271,5 @@ def getequivalentDay(day):
 		return [3,4]
 	if day == "ThFS":
 		return [3,4,5]
+	if day == "TBA":
+		return []

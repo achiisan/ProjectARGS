@@ -2,6 +2,7 @@
 
 import database
 import re #regex
+import subjecttree
 from parser import Parser
 import mongo_database
 
@@ -55,7 +56,7 @@ def loadClasslist():
 
 	database.savetofile()
 	print("=================Loading Complete..==================\n")
-	createSlots()
+	
 
 def createSlots():
 	print("=================Creating Slots..==================\n")
@@ -70,7 +71,9 @@ def createSlots():
 
 
 		if len(contents) > 1:
-			d = createData(contents[0]+"-"+contents[1], int(contents[2]))
+			
+			nAllotment = getNumClassesPerWeek(contents[4])
+			d = createData(contents[0]+"-"+contents[1], int(contents[2]) * nAllotment)
 			data.append(d)
 	
 	mongo_database.addtoCollection("slots", data)
@@ -95,7 +98,17 @@ def createData(coursecode, classsize):
 	data = {"subjectid":coursecode, "slots": slots}
 	return data
 
+def getNumClassesPerWeek(scheduleFormat):
+	if scheduleFormat == "WF" or scheduleFormat == "TTh" or scheduleFormat == "MW" or scheduleFormat == "T-F":
 
+		return 2
+	elif scheduleFormat == "ThFS": 
+		
+		return 3
+	elif scheduleFormat == "M-S":
+		return 6
+	else:
+		return 1
 
 
 
