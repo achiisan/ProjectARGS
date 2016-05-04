@@ -7,6 +7,7 @@ import curriculum
 import enlister
 import subjecttree
 import mongo_database
+import genetic_enlister
 from intervaltree import IntervalTree
 
 
@@ -25,10 +26,7 @@ classlist.createSlots()
 
 enlister.init()
 enlister.enlist()
+genetic_enlister.generateSubjectPool()
+genetic_enlister.enlist()
 
-
-#ret = mongo_database.getSlot("AEC 1-T-4R")
-	#if ret["nModified"] == 0 or ret["updatedExisting"] == False:
-	#	print("No Records to Modify.")
-	#	break
 

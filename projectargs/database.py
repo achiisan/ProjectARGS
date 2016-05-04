@@ -31,15 +31,6 @@ def query(query):
 def commit():
 	r.commit()
 
-def accessStudentList(name):
-	print("Tester")
-
-def accessStudentList():
-	print("Tester2")
-
-def accessClasslist(classname):
-	print("Tester3")
-
 
 
 		

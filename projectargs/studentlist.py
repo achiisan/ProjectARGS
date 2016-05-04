@@ -61,6 +61,20 @@ def getStudentRecommendedCourses(studentno):
 
 def getAllStudentsByGroup():
 
-	buf = database.query("SELECT * FROM studentlist ORDER BY grp")
+	buf = database.query("SELECT * FROM studentlist WHERE grp != 0 ORDER BY grp")
 
 	return buf
+
+def enlistSection(studentno, coursecode, section):
+
+	buf = database.query('UPDATE "'+studentno+'" SET SECTION="'+section+'" WHERE COURSE="'+coursecode+'"')
+	
+	return buf
+
+def getStudentMaxUnits(studentno):
+
+	buf = database.query('SELECT allowed from studentlist WHERE stdno ="'+studentno+'"')
+
+	units = buf.fetchone()
+
+	return units[0]

@@ -5,6 +5,9 @@ import re #regex
 import subjecttree
 from parser import Parser
 import mongo_database
+import os
+from os import listdir
+import re
 
 #Classlist function (LIST OF ALL CLASSES TO BE OFFERED IN A SEMESTER)
 #Take note that THIS IS DIFFERENT FROM the SUBJECTS in the curriculum, as
@@ -58,14 +61,51 @@ def loadClasslist():
 	print("=================Loading Complete..==================\n")
 	
 
+def loadCatalog():
+	catalogs = os.listdir("../CATALOG")
+
+
+	database.query("CREATE TABLE IF NOT EXISTS catalog (coursecode TEXT, coursename TEXT, units INTEGER)")
+	database.commit()
+
+	for entry in catalogs:
+		try:
+			buf = Parser.fileread("../CATALOG/"+entry)
+
+			details  = buf.split("\n")
+
+			nUnits =  re.search("\((.+)\)", details[1]).group(1)
+
+
+			database.query("INSERT INTO catalog VALUES ('"+details[0]+"','"+ details[1]+"',"+nUnits+")")
+		
+		except:
+				print()
+
+	database.commit()
+
+	database.savetofile()
+
 def createSlots():
-	print("=================Creating Slots..==================\n")
+	
 	filebuf = Parser.fileread("../schedule-list/classlist-2015-1.csv")
 	classlist = filebuf.split("\n")
 	data = []
 
+	#progress bar
+	length = len(classlist)
+	interval = int(length / 50)
+	string = "Creating Slots: "
+	i = 0
+
 	for cls in classlist:
 
+		#progress bar in loop
+		if i % interval == 0:
+			print(chr(27) + "[2J")
+			string = string + "="
+			print(string)
+		i = i+1
 
 		contents = cls.split(",")
 
@@ -75,11 +115,14 @@ def createSlots():
 			nAllotment = getNumClassesPerWeek(contents[4])
 			d = createData(contents[0]+"-"+contents[1], int(contents[2]) * nAllotment)
 			data.append(d)
+
 	
 	mongo_database.addtoCollection("slots", data)
 
+def getAllClasses() :
+	buf = database.query("SELECT * FROM subjectlist")
 
-
+	return buf
 def getClass(coursecode):
 	buf = database.query("SELECT * FROM subjectlist WHERE COURSECODE = '"+coursecode+"'")
 
@@ -89,6 +132,7 @@ def getLecture(coursecode, section):
 	buf = database.query("SELECT * FROM subjectlist_lecture WHERE COURSECODE = '"+coursecode+"' AND SECTION = '"+section+"'")
 
 	return buf
+
 
 def createData(coursecode, classsize):
 	slots = []

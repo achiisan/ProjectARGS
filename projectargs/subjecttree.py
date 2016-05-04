@@ -38,8 +38,6 @@ class SubjectTree:
 
 		self.height = nextheight
 
-		print("Added all Sections of "+cls)
-
 
 
 	def getLeaves(self):
@@ -123,6 +121,7 @@ class SubjectTree:
 		self.buckets.append([])
 		for elements in bucket:
 			self.buckets[len(self.buckets)-1].append(elements)
+			
 	
 
 
@@ -166,9 +165,10 @@ def calculatetimeframe(time, day):
 
 
 		#get upper bound
-		splitsecond = splitted[1].split(":")
+		splitsecond = splitted[1].strip().split(":")
 		hour = milhourUB(splitsecond[0])
 		minute = 0
+		
 		if len(splitsecond) > 1:
 			minute = milmin(splitsecond[1])
 		blockid = d+ ((hour-7) * 4) + minute

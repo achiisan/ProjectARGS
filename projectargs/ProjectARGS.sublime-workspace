@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"couses",
+				"courses_list"
+			],
+			[
+				"course",
+				"courses_list"
+			],
+			[
+				"studen",
+				"studentno"
+			],
+			[
 				"stud",
 				"studentlist"
 			],
@@ -67,7 +79,7 @@
 			"file": "classlist.py",
 			"settings":
 			{
-				"buffer_size": 3870,
+				"buffer_size": 4599,
 				"line_ending": "Unix"
 			}
 		},
@@ -76,22 +88,6 @@
 			"settings":
 			{
 				"buffer_size": 318,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/achiisan/ProjectARGS/fwdanonymizeddata/PREDICTIONS",
-			"settings":
-			{
-				"buffer_size": 6050723,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "enlister.py",
-			"settings":
-			{
-				"buffer_size": 3826,
 				"line_ending": "Unix"
 			}
 		},
@@ -112,26 +108,50 @@
 			}
 		},
 		{
-			"file": "/home/achiisan/ProjectARGS/fwdanonymizeddata/anon_ENLISTMENT-5",
+			"file": "/home/achiisan/ProjectARGS/fwdanonymizeddata/PREDICTIONS",
 			"settings":
 			{
-				"buffer_size": 206376,
+				"buffer_size": 6050723,
 				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "genetic_enlister.py",
+			"settings":
+			{
+				"buffer_size": 349,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "subjecttree.py",
+			"settings":
+			{
+				"buffer_size": 5104,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "schedulemap.py",
+			"settings":
+			{
+				"buffer_size": 253,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "enlister.py",
+			"settings":
+			{
+				"buffer_size": 4184,
+				"line_ending": "Unix"
 			}
 		},
 		{
 			"file": "main.py",
 			"settings":
 			{
-				"buffer_size": 635,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "verbosetester.txt",
-			"settings":
-			{
-				"buffer_size": 2430085,
+				"buffer_size": 724,
 				"line_ending": "Unix"
 			}
 		},
@@ -139,7 +159,7 @@
 			"file": "mongo_database.py",
 			"settings":
 			{
-				"buffer_size": 323,
+				"buffer_size": 436,
 				"line_ending": "Unix"
 			}
 		},
@@ -152,76 +172,19 @@
 			}
 		},
 		{
-			"file": "subjecttree.py",
-			"settings":
-			{
-				"buffer_size": 5139,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "blocks",
-			"settings":
-			{
-				"buffer_size": 236,
-				"line_ending": "Unix",
-				"name": "12 hrs / day"
-			}
-		},
-		{
-			"file": "schedulemap.py",
-			"settings":
-			{
-				"buffer_size": 226,
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "studentlist.py",
 			"settings":
 			{
-				"buffer_size": 2245,
+				"buffer_size": 2260,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "BSCS-2011-SP-PR-1",
+			"file": "/run/media/achiisan/ELEMENTARY/SP/REGIST ALL DATABASE/DATABASE/CATALOG/CMSC-100",
 			"settings":
 			{
-				"buffer_size": 0,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "43-2",
-			"settings":
-			{
-				"buffer_size": 0,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "BSCS-2011-SP-PR-2",
-			"settings":
-			{
-				"buffer_size": 25295,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "BSCS-2011-SP-PR-3",
-			"settings":
-			{
-				"buffer_size": 33982,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "BSCS-2011-SP-PR-4",
-			"settings":
-			{
-				"buffer_size": 21530,
-				"line_ending": "Unix"
+				"buffer_size": 137,
+				"line_ending": "Windows"
 			}
 		}
 	],
@@ -257,12 +220,35 @@
 	},
 	"file_history":
 	[
+		"/home/achiisan/ProjectARGS/CATALOG/COMA-300",
+		"/home/achiisan/ProjectARGS/CATALOG/ABM-180",
+		"/home/achiisan/ProjectARGS/CATALOG/WLDL-300",
+		"/home/achiisan/ProjectARGS/CATALOG/BOT-111",
+		"/home/achiisan/.config/sublime-text-3/Packages/User/Plain text.sublime-settings",
+		"/run/media/achiisan/ELEMENTARY/SP/REGIST ALL DATABASE/DATABASE/CATALOG/CMSC-B",
+		"/run/media/achiisan/ELEMENTARY/SP/REGIST ALL DATABASE/DATABASE/CATALOG/ZOTC-111",
+		"/run/media/achiisan/ELEMENTARY/SP/REGIST ALL DATABASE/DATABASE/CATALOG/ACHM-200",
+		"/home/achiisan/ProjectARGS/projectargs/BSCS-2011-SP-PR-4",
+		"/home/achiisan/ProjectARGS/projectargs/BSCS-2011-SP-PR-3",
+		"/home/achiisan/ProjectARGS/projectargs/BSCS-2011-SP-PR-2",
+		"/home/achiisan/ProjectARGS/projectargs/BSCS-2011-SP-PR-1",
+		"/home/achiisan/ProjectARGS/fwdanonymizeddata/anon_ENLISTMENT-5",
+		"/run/media/achiisan/ELEMENTARY/SP/UPPERCLASSSLOTS/ENLISTMENT-3",
+		"/run/media/achiisan/ELEMENTARY/SP/UPPERCLASSSLOTS/ENLISTMENT-2",
+		"/run/media/achiisan/ELEMENTARY/SP/UPPERCLASSSLOTS/ENLISTMENT-4",
+		"/run/media/achiisan/ELEMENTARY/SP/UPPERCLASSSLOTS/ENLISTMENT-5",
+		"/srv/http/ARCHStartup/game.html",
+		"/home/achiisan/ProjectARGS/projectargs/blocks",
+		"/srv/http/projectseras/game.html",
+		"/srv/http/projectseras/server.py",
+		"/home/achiisan/ProjectARGS/projectargs/verbosetester.txt",
+		"/home/achiisan/ProjectARGS/projectargs/main.py",
+		"/home/achiisan/ProjectARGS/fwdanonymizeddata/PREDICTIONS",
+		"/home/achiisan/ProjectARGS/projectargs/43-2",
 		"/home/achiisan/ProjectARGS/projectargs/enlister.py",
 		"/home/achiisan/ProjectARGS/projectargs/install.sh'",
-		"/home/achiisan/ProjectARGS/fwdanonymizeddata/PREDICTIONS",
 		"/home/achiisan/ProjectARGS/fwdanonymizeddata/anon_PREDICTIONS",
 		"/run/media/achiisan/ELEMENTARY/SP/UPPERCLASSSLOTS/PREDICTIONS",
-		"/home/achiisan/ProjectARGS/projectargs/BSCS-2011-SP-PR-1",
 		"/home/achiisan/ProjectARGS_backup_broken/projectargs/classlist.py",
 		"/home/achiisan/ProjectARGS_backup_broken/projectargs/enlister.py",
 		"/home/achiisan/ProjectARGS_backup_broken/projectargs/mongo_database.py",
@@ -298,7 +284,6 @@
 		"/home/achiisan/ProjectARGS/projectargs/curriculum.py",
 		"/home/achiisan/ProjectARGS/projectargs/test.py",
 		"/home/achiisan/workspace/137-Client-Test/How to Connect to Server.txt",
-		"/home/achiisan/ProjectARGS/fwdanonymizeddata/anon_ENLISTMENT-5",
 		"/home/achiisan/ProjectARGS/fwdanonymizeddata/anon_ENLISTMENT-4",
 		"/home/achiisan/ProjectARGS/fwdanonymizeddata/anon_ENLISTMENT-3",
 		"/home/achiisan/ProjectARGS/Documentation Manuals/rediscommands.txt",
@@ -308,7 +293,7 @@
 	],
 	"find":
 	{
-		"height": 21.0
+		"height": 67.0
 	},
 	"find_in_files":
 	{
@@ -322,6 +307,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"{}\n",
+			"2011-47257",
+			"2011-",
+			"2013-225",
+			"ST-2L",
+			"ST-1L",
 			"MILLAR",
 			"print",
 			"2012-37746",
@@ -376,7 +367,7 @@
 	"groups":
 	[
 		{
-			"selected": 5,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -405,7 +396,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 17,
+					"stack_index": 15,
 					"type": "text"
 				},
 				{
@@ -421,8 +412,8 @@
 						"selection":
 						[
 							[
-								81,
-								81
+								232,
+								232
 							]
 						],
 						"settings":
@@ -430,10 +421,10 @@
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 29.0,
+						"translation.y": 117.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 21,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
@@ -442,15 +433,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3870,
+						"buffer_size": 4599,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3807,
-								3807
+								3048,
+								3048
 							]
 						],
 						"settings":
@@ -459,10 +450,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 624.0,
+						"translation.y": 351.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -478,8 +469,8 @@
 						"selection":
 						[
 							[
-								116,
-								116
+								132,
+								132
 							]
 						],
 						"settings":
@@ -490,68 +481,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 15,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "/home/achiisan/ProjectARGS/fwdanonymizeddata/PREDICTIONS",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6050723,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5479130,
-								5479130
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 1725503.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "enlister.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3826,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2511,
-								2511
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 977.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
 					"file": "backup.py",
 					"semi_transient": false,
 					"settings":
@@ -576,11 +510,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
+					"stack_index": 14,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 5,
 					"file": "/home/achiisan/ProjectARGS/schedule-list/classlist-2015-1.csv",
 					"semi_transient": false,
 					"settings":
@@ -592,8 +526,8 @@
 						"selection":
 						[
 							[
-								7798,
-								7798
+								305310,
+								305310
 							]
 						],
 						"settings":
@@ -601,61 +535,175 @@
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 7462.0,
+						"translation.y": 85644.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 13,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
-					"file": "/home/achiisan/ProjectARGS/fwdanonymizeddata/anon_ENLISTMENT-5",
+					"buffer": 6,
+					"file": "/home/achiisan/ProjectARGS/fwdanonymizeddata/PREDICTIONS",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 206376,
+						"buffer_size": 6050723,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								413,
-								413
+								1898,
+								1898
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 156.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "genetic_enlister.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 349,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								154,
+								154
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 20,
+					"stack_index": 12,
 					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 1,
-			"sheets":
-			[
+				},
 				{
-					"buffer": 9,
-					"file": "main.py",
+					"buffer": 8,
+					"file": "subjecttree.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 635,
+						"buffer_size": 5104,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								183,
-								183
+								2702,
+								2702
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1176.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "schedulemap.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 253,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								250,
+								250
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 10,
+					"file": "enlister.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4184,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1634,
+								1634
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 816.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "main.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 724,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								358,
+								358
 							]
 						],
 						"settings":
@@ -670,63 +718,35 @@
 					"type": "text"
 				},
 				{
-					"buffer": 10,
-					"file": "verbosetester.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2430085,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								7159,
-								7166
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 2472576.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 11,
+					"buffer": 12,
 					"file": "mongo_database.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 323,
+						"buffer_size": 436,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								256,
-								256
+								434,
+								434
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
-						"translation.x": 53.0,
-						"translation.y": -0.0,
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
-					"buffer": 12,
+					"buffer": 13,
 					"file": "curriculum.py",
 					"semi_transient": false,
 					"settings":
@@ -748,113 +768,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 39.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 14,
-					"type": "text"
-				},
-				{
-					"buffer": 13,
-					"file": "subjecttree.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5139,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5126,
-								5126
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
+					"stack_index": 9,
 					"type": "text"
 				},
 				{
 					"buffer": 14,
-					"file": "blocks",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 236,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								234,
-								234
-							]
-						],
-						"settings":
-						{
-							"auto_name": "12 hrs / day",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 19,
-					"type": "text"
-				},
-				{
-					"buffer": 15,
-					"file": "schedulemap.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 226,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								223,
-								223
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 18,
-					"type": "text"
-				},
-				{
-					"buffer": 16,
 					"file": "studentlist.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2245,
+						"buffer_size": 2260,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1912,
-								1912
+								2009,
+								2009
 							]
 						],
 						"settings":
@@ -862,20 +796,20 @@
 							"syntax": "Packages/Python/Python.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": 168.0,
-						"translation.y": 351.0,
+						"translation.x": 0.0,
+						"translation.y": 78.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 17,
-					"file": "BSCS-2011-SP-PR-1",
+					"buffer": 15,
+					"file": "/run/media/achiisan/ELEMENTARY/SP/REGIST ALL DATABASE/DATABASE/CATALOG/CMSC-100",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 0,
+						"buffer_size": 137,
 						"regions":
 						{
 						},
@@ -892,121 +826,9 @@
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 12,
-					"type": "text"
-				},
-				{
-					"buffer": 18,
-					"file": "43-2",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 0,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 16,
-					"type": "text"
-				},
-				{
-					"buffer": 19,
-					"file": "BSCS-2011-SP-PR-2",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 25295,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1425,
-								1425
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 10712.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 11,
-					"type": "text"
-				},
-				{
-					"buffer": 20,
-					"file": "BSCS-2011-SP-PR-3",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 33982,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								13568,
-								13568
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 14534.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 21,
-					"file": "BSCS-2011-SP-PR-4",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 21530,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								18579,
-								18579
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 8058.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
 					"type": "text"
 				}
 			]

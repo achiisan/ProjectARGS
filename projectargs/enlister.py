@@ -7,10 +7,12 @@ import subjecttree
 import studentlist
 import mongo_database
 import schedulemap
+import database
 
 from subjecttree import SubjectTree
 from intervaltree import IntervalTree
 from schedulemap import ScheduleMap
+from tqdm import tqdm
 
 #===========================================
 #ENLIST FUNCTION
@@ -36,11 +38,6 @@ def init():
 		print("Generate a bucket for "+parsetrees)
 		subjecttree.subjecttrees[parsetrees].generateBuckets([],1, IntervalTree())
 		
-		#for k in subjecttree.subjecttrees[parsetrees].it_buckets:
-		#	print("Bucket:")
-		#	for interval_object in k:
-		#		print(interval_object.data.classinfo)
-
 		print(len(subjecttree.subjecttrees[parsetrees].buckets))
 
 
@@ -53,65 +50,74 @@ def enlist():
 	#get students that is part of that parsetree
 	stdlist = studentlist.getAllStudentsByGroup()
 	#stdlist = studentlist.getStudentViaCurriculum(st.curriculum,st.year)
+	stdlist = stdlist.fetchall()
+	pbar = tqdm(total=len(stdlist))
 	for student in stdlist:
 		#get a student recommended course
 		recomm = studentlist.getStudentRecommendedCourses(student[0])
-		#file.write(student[0]+"\n")
+	
+		stud = ScheduleMap(student[0])
 		courses_list = {}
 		#put the recommended courses in a dictionary for easy indexing
 		for course in recomm:
 			courses_list[course[2]] = 1
 
 		currId = student[4]+"-"+str(student[9])
-		#file.write(currId+"\n")
+		
 		if currId in subjecttree.subjecttrees:
 			#get bucket
 			st = subjecttree.subjecttrees[currId]
 			if st.bucketcounter < len(st.it_buckets):
-				#file.write("Trying to enlist...\n")
+				
 				bucket = st.it_buckets[st.bucketcounter]
 
 				enlistcompleted = False
 
-				stud = ScheduleMap(student[0])
-				#file.write("ENLIST = "+student[0]+"\n")
-				print("ENLIST = "+student[0]+"\n")
+				#print("ENLIST = "+student[0]+"\n")
 				
 				while  enlistcompleted == False:
 					
 					bucketFailed = False
-					print("Reset...")
+				#	print("Reset...")
 
 					for item in bucket.items():	
 						if item.data.classinfo[0] in courses_list and bucketFailed == False:
 							if len(mongo_database.checkSlot(item.data.classinfo[0]+"-"+item.data.classinfo[1])["slots"]) > 0:
 								stud.schedule.add(item)
 							else:
-								print("No More Slots on"+item.data.classinfo[0]+" "+item.data.classinfo[1])
+				#				print("No More Slots on"+item.data.classinfo[0]+" "+item.data.classinfo[1])
 								bucketFailed = True
 					if bucketFailed == True:
-						print("Change bucket..")
+				#		print("Change bucket..")
 						st.bucketcounter = st.bucketcounter + 1
 						if st.bucketcounter < len(st.it_buckets):
 							bucket = st.it_buckets[st.bucketcounter]
-							stud = ScheduleMap(student[0])
+							stud.schedule = IntervalTree()
 							
 						else:
 							enlistcompleted = True
 					else:
-						print("Save bucket")
+				#		print("Save bucket")
 						for item in stud.schedule.items():
+							courses_list[item.data.classinfo[0]] = 1
+							ret = classlist.getLecture(item.data.classinfo[0],item.data.classinfo[1])
+							data = ret.fetchone()
+
+							if data is None:
+								studentlist.enlistSection(student[0], item.data.classinfo[0], item.data.classinfo[1])
+							
 							mongo_database.getSlot(item.data.classinfo[0]+"-"+item.data.classinfo[1])
 						enlistcompleted = True
+		
 
-				schedulemap.schedules[student[0]] = stud
+			schedulemap.schedules[student[0]] = stud
+		
+		pbar.update(1)
 
-			#else:
-				#file.write("No more buckets :(\n")
-
-
-				
-
+	pbar.close()		
+	
+	database.commit()
+	database.savetofile()
 	printToFileSchedule()
 		
 
@@ -149,9 +155,10 @@ def generateSubjectParseTree(curr,year, term): #generate a parse tree given a cu
 	temp = SubjectTree(curr, year)
 
 	for entry in buf:
+
 		temp.addClass(entry[0])
 
-	print("===END PARSE TREE===");
+	
 
 	subjecttree.subjecttrees[str(curr)+'-'+str(year)] = temp
 
