@@ -117,16 +117,78 @@ def enlist():
 					if specieHighestScorer.score < j.score:
 						specieHighestScorer = j
 
+			if specieHighestScorer.score >= treshold:
+				sched.schedule = specieHighestScorer.tree
+			else:
+				while trials < nTrials:
+					trials = trials + 1
+					candidate = crossover(sched.schedule,specieHighestScorer,random.choice(minischedules))
+					for generated in candidate:
+						if generated.score > specieHighestScorer.score:
+							specieHighestScorer = generated
 
-			sched.schedule = specieHighestScorer.tree
+					if specieHighestScorer.score >= treshold:
+						trials = nTrials
+
+
+			
 
 
 	enlister.printToFileSchedule()
 				
 
 				
-def crossover(sched1, sched2):
+def crossover(initialSched,sched1,sched2):
+
+	child1 = miniSchedule()
+	child1.tree = initialSched.copy()
+
+	child2 = miniSchedule()
+	child2.tree = initialSched.copy()
+
+
+	children = [child1, child2]
+
+	cutpoint = int(len(sched1.generation)/2)
 	
+	x0 = sched1.generation[0:cutpoint]
+	x1 = sched1.generation[cutpoint:len(sched1.generation)]
+
+	y0 = sched2.generation[0:cutpoint]
+	y1 = sched2.generation[cutpoint:len(sched2.generation)]	
+
+	children[0].generation = x0+y1
+	children[1].generation = y0+x1
+
+	for j in children:
+		for k in j.generation:
+
+			if len(mongo_database.checkSlot(k[0]+"-"+k[1])["slots"]) <= 0:
+						j.score = j.score - 0.2
+			else:
+				timeframe = subjecttree.calculatetimeframe(k[3],k[4])
+				if timeframe != -1:
+					for time in timeframe:
+						if j.tree.overlaps(time[0], time[1]) == True:
+							j.score = j.score - 0.1
+						else:
+							j.tree[time[0]:time[1]] = ClassNode(k,0,None)
+
+			lecComp = classlist.getLecture(k[0], k[9])
+			for entry in lecComp:
+				if len(mongo_database.checkSlot(entry[0]+"-"+entry[1])["slots"]) <= 0:
+					j.score = j.score - 0.2
+				else:
+					timeframe = subjecttree.calculatetimeframe(entry[3],entry[4])
+				if timeframe != -1:
+					for time in timeframe:
+						if j.tree.overlaps(time[0], time[1]) == True:
+							j.score = j.score - 0.1
+						else:
+							j.tree[time[0]:time[1]] = ClassNode(entry,0,None)
+
+	return children
+		
 def mutate(sched1):
 	print("Y")
 ##########################################

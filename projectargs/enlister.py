@@ -110,7 +110,7 @@ def enlist():
 						enlistcompleted = True
 		
 
-			schedulemap.schedules[student[0]] = stud
+		schedulemap.schedules[student[0]] = stud
 		
 		pbar.update(1)
 
