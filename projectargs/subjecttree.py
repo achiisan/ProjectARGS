@@ -3,6 +3,7 @@
 
 import classlist
 from intervaltree import IntervalTree
+import re
 
 
 subjecttrees = { }
@@ -18,12 +19,9 @@ class SubjectTree:
 		self.buckets = []
 		self.it_buckets = []
 		self.bucketcounter = 0
-		
-
-
 
 	def addClass(self, cls):
-		
+
 		buf = classlist.getClass(cls)
 
 		nextheight = self.height + 1
@@ -37,8 +35,6 @@ class SubjectTree:
 			self.tree.extend(sections)
 
 		self.height = nextheight
-
-
 
 	def getLeaves(self):
 		leaves = []
@@ -55,6 +51,7 @@ class SubjectTree:
 			hasElements = False
 			for elements in self.tree:
 				if elements.height == height:
+
 					hasElements = True #yung papasok kasi sa if na ito ay kapag yung height na specified ay nasa current tree pa
 					temptree = tree.copy()
 					timeframe = calculatetimeframe(elements.classinfo[3], elements.classinfo[4])
@@ -71,47 +68,42 @@ class SubjectTree:
 
 						tree = temptree
 						continue
+					else:
+						bucketz.append(elements)
+						lecComp = classlist.getLecture(elements.classinfo[0], elements.classinfo[9])
+						lectureadded = False
 
-					
-					bucketz.append(elements)
-					lecComp = classlist.getLecture(elements.classinfo[0], elements.classinfo[9])
-					lectureadded = False
+						#if there is a lecture component add it on the schedule
+						for entry in lecComp:
+							temp = ClassNode(entry,0,None)
+							timeframe = calculatetimeframe(entry[3], entry[4])
+							temp.time = timeframe
+							if timeframe != -1:
+								for time in timeframe:
+									if tree.overlaps(time[0],time[1]) == False:
+										tree[time[0]:time[1]] = temp
+									else:
+										hasoverlap = True
 
-					#if there is a lecture component add it on the schedule
-					for entry in lecComp:
-						temp = ClassNode(entry,0,None)
-						timeframe = calculatetimeframe(entry[3], entry[4])
-						temp.time = timeframe
-						if timeframe != -1:
-							for time in timeframe:
-								if tree.overlaps(time[0],time[1]) == False:
-									tree[time[0]:time[1]] = temp
-								else:
-									hasoverlap = True
-						
-						bucketz.append(temp)
-						lectureadded = True
+							bucketz.append(temp)
+							lectureadded = True
 
-					if hasoverlap == True:
-						bucketz.pop()
-						bucketz.pop()
-						tree = temptree
-						continue
-
+						if hasoverlap == True:
+							bucketz.pop()
+							bucketz.pop()
+							tree = temptree
+							continue
 
 					#recursive function
 					ret = self.generateBuckets(bucket, height+1, tree)
-					
 
 					get = bucketz.pop()
-				
+
 					if lectureadded == True:
 						get = bucketz.pop()
-					
-					tree = temptree
-					
 
-					
+					tree = temptree
+
 			if hasElements == False:
 				self.createBucket(bucketz)
 				self.it_buckets.append(tree)
@@ -121,11 +113,11 @@ class SubjectTree:
 		self.buckets.append([])
 		for elements in bucket:
 			self.buckets[len(self.buckets)-1].append(elements)
-			
-	
 
 
-	
+
+
+
 #####################################################
 
 class ClassNode: #subject node in parse tree (used in subjectree.py)
@@ -147,37 +139,40 @@ def calculatetimeframe(time, day):
 		return -1
 	days = getequivalentDay(day)
 	ret = []
-	for day in days:		
-		r = []
-		d = day*43
+	try:
+		iterator_day = iter(days)
+		for day in days:
+			r = []
+			d = day*43
 
-		splitted = time.split("-")	
+			splitted = time.split("-")
 
-		#get lower bound
-		splitsecond = splitted[0].split(":")
-		hour = milhourLB(splitsecond[0])
-		minute = 0
-		if len(splitsecond) > 1:
-			minute = milmin(splitsecond[1])
-		blockid = d+ ((hour-7) * 4) + minute
-		#print(blockid)
-		r.append(blockid)
+			#get lower bound
+			splitsecond = splitted[0].split(":")
+			hour = milhourLB(splitsecond[0])
+			minute = 0
+			if len(splitsecond) > 1:
+				minute = milmin(splitsecond[1])
+			blockid = d+ ((hour-7) * 4) + minute
+			#print(blockid)
+			r.append(blockid)
 
 
-		#get upper bound
-		splitsecond = splitted[1].strip().split(":")
-		hour = milhourUB(splitsecond[0])
-		minute = 0
-		
-		if len(splitsecond) > 1:
-			minute = milmin(splitsecond[1])
-		blockid = d+ ((hour-7) * 4) + minute
-		#print(blockid)
-		r.append(blockid)
-		ret.append(r)
+			#get upper bound
+			splitsecond = splitted[1].strip().split(":")
+			hour = milhourUB(splitsecond[0])
+			minute = 0
 
-	return ret
+			if len(splitsecond) > 1:
+				minute = milmin(splitsecond[1])
+			blockid = d+ ((hour-7) * 4) + minute
+			#print(blockid)
+			r.append(blockid)
+			ret.append(r)
 
+		return ret
+	except TypeError:
+		return -1
 
 
 
@@ -206,7 +201,7 @@ def milhourLB(hour):
 		return 17
 	if hour == "6":
 		return 18
-	
+
 
 def milhourUB(hour):
 
@@ -256,7 +251,7 @@ def getequivalentDay(day):
 	if day == "Fri":
 		return [4]
 	if day == "Sat":
-		return [5]		
+		return [5]
 	if day == "Mon":
 		return [0]
 	if day == "WF":

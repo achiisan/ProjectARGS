@@ -11,8 +11,6 @@ from parser import  Parser
 
 
 r = sqlite3.connect(":memory:")
-	
-
 
 #save to a custom DB
 def savetofile( filename="projectargs.db"):
@@ -33,7 +31,7 @@ def commit():
 
 
 
-		
+
 loadfromfile("projectargs.db")
 #loadfromfile("curriculum.db")
-print("Database Opened Successfully")	
+print("Database Opened Successfully")

@@ -14,11 +14,11 @@ from tqdm import tqdm
 
 subjectpool = {}
 
-#EDIT THIS PARAMETERS:
+#EDIT THIS PARAMETERS
 
 nGenerations = 10
 perCrossover = 85
-perMutate = 100 - perCrossover 
+perMutate = 100 - perCrossover
 nTrials = 50
 
 def generateSubjectPool():
@@ -40,7 +40,7 @@ def enlist():
 		treshold = 1.0
 		specieHighestScorer = None
 
-		
+
 
 		if student[0] in schedulemap.schedules:
 
@@ -69,19 +69,19 @@ def enlist():
 				ms = miniSchedule()
 				ms.tree = sched.schedule.copy()
 				ms.nunits = currUnits
-				#file.write("Generation\n")
+
 				for entry in candidatesubjs:
 					if ms.nunits + int(entry[4]) >= maxUnits:
 						break
 
 					if entry[2] in subjectpool and len(subjectpool[entry[2]]) > 0:
 						k = random.choice(subjectpool[entry[2]])
-						
+
 						ms.generation.append(k)
 						ms.nunits = ms.nunits + int(entry[4])
-					
-						
-				minischedules.append(ms)							
+
+
+				minischedules.append(ms)
 
 			#score each population and get the highest score
 			for j in minischedules:
@@ -117,27 +117,27 @@ def enlist():
 					if specieHighestScorer.score < j.score:
 						specieHighestScorer = j
 
-			if specieHighestScorer.score >= treshold:
-				sched.schedule = specieHighestScorer.tree
-			else:
-				while trials < nTrials:
-					trials = trials + 1
-					candidate = crossover(sched.schedule,specieHighestScorer,random.choice(minischedules))
-					for generated in candidate:
-						if generated.score > specieHighestScorer.score:
-							specieHighestScorer = generated
+			#if specieHighestScorer.score >= treshold:
+			sched.schedule = specieHighestScorer.tree
+#			else:
+#				while trials < nTrials:
+#					trials = trials + 1
+#					candidate = crossover(sched.schedule,specieHighestScorer,random.choice(minischedules))
+#					for generated in candidate:
+#						if generated.score > specieHighestScorer.score:
+#							specieHighestScorer = generated
 
-					if specieHighestScorer.score >= treshold:
-						trials = nTrials
+#					if specieHighestScorer.score >= treshold:
+#						trials = nTrials
 
 
-			
+
 
 
 	enlister.printToFileSchedule()
-				
 
-				
+
+
 def crossover(initialSched,sched1,sched2):
 
 	child1 = miniSchedule()
@@ -150,12 +150,12 @@ def crossover(initialSched,sched1,sched2):
 	children = [child1, child2]
 
 	cutpoint = int(len(sched1.generation)/2)
-	
+
 	x0 = sched1.generation[0:cutpoint]
 	x1 = sched1.generation[cutpoint:len(sched1.generation)]
 
 	y0 = sched2.generation[0:cutpoint]
-	y1 = sched2.generation[cutpoint:len(sched2.generation)]	
+	y1 = sched2.generation[cutpoint:len(sched2.generation)]
 
 	children[0].generation = x0+y1
 	children[1].generation = y0+x1
@@ -188,7 +188,7 @@ def crossover(initialSched,sched1,sched2):
 							j.tree[time[0]:time[1]] = ClassNode(entry,0,None)
 
 	return children
-		
+
 def mutate(sched1):
 	print("Y")
 ##########################################
@@ -196,13 +196,6 @@ class miniSchedule:
 
 	def __init__(self):
 		self.score = 1
-		self.nunits = 0 
+		self.nunits = 0
 		self.generation = []
 		self. tree = None
-
-
-
-
-		
-
-	

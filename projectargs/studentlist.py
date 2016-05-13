@@ -6,10 +6,10 @@ from parser import Parser
 import json
 
 
-#List of all students in the database. The load student list LOADS a PREDICTION 
+#List of all students in the database. The load student list LOADS a PREDICTION
 #file from REGIST. This will be the basis for the prediction of ARGS
 
-#Each student will be created a database table which will house the predictions 
+#Each student will be created a database table which will house the predictions
 #that will be used for alloting students
 
 
@@ -30,13 +30,13 @@ def loadStudentList():
 		for info in studinfo:
 			if info.strip() != '' :
 				ic = info.split(",")
-				print(chr(27) + "[2J")
-				print(ic[1].replace("'","''"))
+
+				#print(ic[1].replace("'","''"))
 				if gotInfo == False:
 
 					database.query("INSERT INTO studentlist VALUES('"+ic[0]+"','"+ic[1].replace("'","''")+"','"+ic[2]+"',"+ic[3]+",'"+ic[4]+"','"+ic[5]+"','"+ic[6]+"',"+ic[7]+","+ic[8]+","+ic[9]+","+ic[10]+","+ic[11]+","+ic[12]+","+ic[13]+","+ic[14]+")")
 					count = count + 1
-					
+					print(chr(27) + "[2J")
 					print("Saving Student#: ",count)
 					gotInfo = True
 					database.query("CREATE TABLE IF NOT EXISTS'"+ic[0]+"' (SCHOOL YEAR TEXT, TERM TEXT, COURSE TEXT,SECTION TEXT, UNITS TEXT, GRADE TEXT, COURSERANK TEXT, CONTRIB TEXT)")
@@ -68,7 +68,7 @@ def getAllStudentsByGroup():
 def enlistSection(studentno, coursecode, section):
 
 	buf = database.query('UPDATE "'+studentno+'" SET SECTION="'+section+'" WHERE COURSE="'+coursecode+'"')
-	
+
 	return buf
 
 def getStudentMaxUnits(studentno):

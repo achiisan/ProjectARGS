@@ -16,7 +16,7 @@ import re
 
 classes = {}
 
-#load classlist from file 
+#load classlist from file
 
 def loadClasslist():
 	print("=================Loading Classlist..==================\n")
@@ -38,11 +38,11 @@ def loadClasslist():
 
 		if len(contents) > 1:
 
-			
+
 			if re.match("[A-Za-z0-9]*\-[0-9]*[LR]", contents[1] ):
 				#print("Recit")
 				database.query("INSERT INTO subjectlist (coursecode, section, class_size, time, day, room, pri_instructor, sec_instructor, avail_slots, lecture_comp) VALUES ('"+contents[0]+"','"+contents[1]+"',"+contents[2]+",'"+contents[3]+"','"+contents[4]+"','"+contents[5]+"','"+contents[6]+"','"+contents[7]+"',"+contents[2]+",'"+tempLecture[1]+"')")
-				
+
 				if lectureDeleted == False:
 					database.query("DELETE FROM subjectlist WHERE coursecode = '"+tempLecture[0]+"' AND section = '"+tempLecture[1]+"'")
 					database.query("INSERT INTO subjectlist_lecture (coursecode, section, class_size, time, day, room, pri_instructor, sec_instructor, avail_slots) VALUES ('"+tempLecture[0]+"','"+tempLecture[1]+"',"+tempLecture[2]+",'"+tempLecture[3]+"','"+tempLecture[4]+"','"+tempLecture[5]+"','"+tempLecture[6]+"','"+tempLecture[7]+"',"+tempLecture[2]+")")
@@ -54,12 +54,12 @@ def loadClasslist():
 				tempLecture = contents
 				lectureDeleted = False
 				database.query("INSERT INTO subjectlist (coursecode, section, class_size, time, day, room, pri_instructor, sec_instructor, avail_slots, lecture_comp) VALUES ('"+contents[0]+"','"+contents[1]+"',"+contents[2]+",'"+contents[3]+"','"+contents[4]+"','"+contents[5]+"','"+contents[6]+"','"+contents[7]+"',"+contents[2]+",'None')")
-				
+
 	database.commit()
 
 	database.savetofile()
 	print("=================Loading Complete..==================\n")
-	
+
 
 def loadCatalog():
 	catalogs = os.listdir("../CATALOG")
@@ -78,7 +78,7 @@ def loadCatalog():
 
 
 			database.query("INSERT INTO catalog VALUES ('"+details[0]+"','"+ details[1]+"',"+nUnits+")")
-		
+
 		except:
 				print()
 
@@ -87,7 +87,7 @@ def loadCatalog():
 	database.savetofile()
 
 def createSlots():
-	
+
 	filebuf = Parser.fileread("../schedule-list/classlist-2015-1.csv")
 	classlist = filebuf.split("\n")
 	data = []
@@ -111,12 +111,12 @@ def createSlots():
 
 
 		if len(contents) > 1:
-			
+
 			nAllotment = getNumClassesPerWeek(contents[4])
 			d = createData(contents[0]+"-"+contents[1], int(contents[2]) * nAllotment)
 			data.append(d)
 
-	
+
 	mongo_database.addtoCollection("slots", data)
 
 def getAllClasses() :
@@ -146,16 +146,10 @@ def getNumClassesPerWeek(scheduleFormat):
 	if scheduleFormat == "WF" or scheduleFormat == "TTh" or scheduleFormat == "MW" or scheduleFormat == "T-F":
 
 		return 2
-	elif scheduleFormat == "ThFS": 
-		
+	elif scheduleFormat == "ThFS":
+
 		return 3
 	elif scheduleFormat == "M-S":
 		return 6
 	else:
 		return 1
-
-
-
-
-
-
