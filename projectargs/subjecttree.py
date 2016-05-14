@@ -16,7 +16,7 @@ class SubjectTree:
 		self.tree = []
 		self.height = 0
 		self.tree.append(ClassNode(None, self.height, None)) #root node
-		self.buckets = []
+		#self.buckets = []
 		self.it_buckets = []
 		self.bucketcounter = 0
 
@@ -46,7 +46,7 @@ class SubjectTree:
 		return leaves
 
 	def generateBuckets(self,bucket,height, tree): #preorder traversal
-			bucketz = bucket
+			#bucketz = bucket
 
 			hasElements = False
 			for elements in self.tree:
@@ -69,7 +69,7 @@ class SubjectTree:
 						tree = temptree
 						continue
 					else:
-						bucketz.append(elements)
+				#		bucketz.append(elements)
 						lecComp = classlist.getLecture(elements.classinfo[0], elements.classinfo[9])
 						lectureadded = False
 
@@ -85,27 +85,26 @@ class SubjectTree:
 									else:
 										hasoverlap = True
 
-							bucketz.append(temp)
+				#			bucketz.append(temp)
 							lectureadded = True
 
 						if hasoverlap == True:
-							bucketz.pop()
-							bucketz.pop()
+				#			bucketz.pop()
+				#			bucketz.pop()
 							tree = temptree
 							continue
 
 					#recursive function
 					ret = self.generateBuckets(bucket, height+1, tree)
 
-					get = bucketz.pop()
+				#	get = bucketz.pop()
+				#	if lectureadded == True:
+				#		get = bucketz.pop()
 
-					if lectureadded == True:
-						get = bucketz.pop()
-
-					tree = temptree
+				#	tree = temptree
 
 			if hasElements == False:
-				self.createBucket(bucketz)
+				#self.createBucket(bucketz)
 				self.it_buckets.append(tree)
 				return 22
 

@@ -119,6 +119,13 @@ def enlist():
 
 			#if specieHighestScorer.score >= treshold:
 			sched.schedule = specieHighestScorer.tree
+			for item in sched.schedule.items():
+				ret = classlist.getLecture(item.data.classinfo[0],item.data.classinfo[1])
+				data = ret.fetchone()
+
+				if data is None:
+					studentlist.enlistSection(student[0], item.data.classinfo[0], item.data.classinfo[1])
+
 #			else:
 #				while trials < nTrials:
 #					trials = trials + 1
@@ -135,6 +142,8 @@ def enlist():
 
 
 	enlister.printToFileSchedule()
+	database.commit()
+	database.savetofile()
 
 
 

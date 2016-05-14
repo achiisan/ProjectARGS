@@ -41,10 +41,12 @@ def init():
 
 		filee.write("##\n")
 		filee.write(parsetrees)
-		for bucket in subjecttree.subjecttrees[parsetrees].buckets:
+		for bucket in subjecttree.subjecttrees[parsetrees].it_buckets:
 			filee.write("#\n")
-			for elements in bucket:
-				for content in elements.classinfo:
+			for elements in bucket.items():
+				filee.write(str(elements.begin)+",")
+				filee.write(str(elements.end)+",")
+				for content in elements.data.classinfo:
 					filee.write(str(content)+",")
 				filee.write("\n")
 
@@ -66,15 +68,11 @@ def loadBuckets():
 				subj = bfr.split(",")
 
 				if len(subj) > 1:
-					timeframe = subjecttree.calculatetimeframe(subj[3], subj[4])
-					entry = ClassNode(subj, 0, None)
-					if timeframe != -1:
-						for time in timeframe:
-							bk[time[0]:time[1]] = entry
-						st.it_buckets.append(bk)
-
-
-
+					#timeframe = subjecttree.calculatetimeframe(subj[3], subj[4])
+					subj2 = subj[2:len(subj)]
+					entry = ClassNode(subj2, 0, None)
+					bk[int(subj[0]):int(subj[1])] = entry
+					st.it_buckets.append(bk)
 def enlist():
 
 	print("ENLISTING...")
@@ -104,22 +102,22 @@ def enlist():
 
 				enlistcompleted = False
 
-				#print("ENLIST = "+student[0]+"\n")
+	#			print("ENLIST = "+student[0]+"\n")
 
 				while  enlistcompleted == False:
 
 					bucketFailed = False
-				#	print("Reset...")
+	#				print("Reset...")
 
 					for item in bucket.items():
 						if item.data.classinfo[0] in courses_list and bucketFailed == False:
 							if len(mongo_database.checkSlot(item.data.classinfo[0]+"-"+item.data.classinfo[1])["slots"]) > 0:
 								stud.schedule.add(item)
 							else:
-				#				print("No More Slots on"+item.data.classinfo[0]+" "+item.data.classinfo[1])
+	#							print("No More Slots on"+item.data.classinfo[0]+" "+item.data.classinfo[1])
 								bucketFailed = True
 					if bucketFailed == True:
-				#		print("Change bucket..")
+	#					print("Change bucket..")
 						st.bucketcounter = st.bucketcounter + 1
 						if st.bucketcounter < len(st.it_buckets):
 							bucket = st.it_buckets[st.bucketcounter]
@@ -128,7 +126,7 @@ def enlist():
 						else:
 							enlistcompleted = True
 					else:
-				#		print("Save bucket")
+	#					print("Save bucket")
 						for item in stud.schedule.items():
 							courses_list[item.data.classinfo[0]] = 1
 							ret = classlist.getLecture(item.data.classinfo[0],item.data.classinfo[1])
@@ -169,13 +167,6 @@ def printToFileSchedule():
 					for entry in schedulemap.schedules[student[0]].schedule.items():
 						classinfo = entry.data.classinfo
 						file.write(classinfo[0]+","+classinfo[1]+","+classinfo[3]+","+classinfo[4]+","+classinfo[5]+","+classinfo[6]+"\n")
-
-
-
-
-
-
-
 
 
 def generateSubjectParseTree(curr,year, term): #generate a parse tree given a curriculum and a term

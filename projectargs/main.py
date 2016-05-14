@@ -15,9 +15,9 @@ from intervaltree import IntervalTree
 
 
 classlist.loadClasslist()
-curriculum.loadCurriculum("BSCS-2011-SP-PR")
-#curriculum.loadCurriculumLegacy("TAMACURRICULA-2014-FIRST")
-curriculum.loadCurriculumLegacy("baca_test")
+#curriculum.loadCurriculum("BSCS-2011-SP-PR")
+curriculum.loadCurriculumLegacy("TAMACURRICULA-2014-FIRST")
+#curriculum.loadCurriculumLegacy("curr_test")
 studentlist.loadStudentList()
 
 
@@ -30,5 +30,5 @@ enlister.init()
 
 enlister.enlist()
 
-genetic_enlister.generateSubjectPool()
-genetic_enlister.enlist()
+#genetic_enlister.generateSubjectPool()
+#genetic_enlister.enlist()
