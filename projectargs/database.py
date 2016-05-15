@@ -31,7 +31,8 @@ def commit():
 
 
 
-
-loadfromfile("projectargs.db")
-#loadfromfile("curriculum.db")
+#INTERCHANGE FOR ANALYTICS (REGIST FILES)
+#loadfromfile("projectargs.db")
+#loadfromfile("regist.db")
+loadfromfile("projectargs_analysis2.db")
 print("Database Opened Successfully")

@@ -14,21 +14,21 @@ from intervaltree import IntervalTree
 #=========================LOAD INITIAL FILES
 
 
-classlist.loadClasslist()
+#classlist.loadClasslist()
 #curriculum.loadCurriculum("BSCS-2011-SP-PR")
-curriculum.loadCurriculumLegacy("TAMACURRICULA-2014-FIRST")
+#curriculum.loadCurriculumLegacy("TAMACURRICULA-2014-FIRST")
 #curriculum.loadCurriculumLegacy("curr_test")
-studentlist.loadStudentList()
+#studentlist.loadStudentList(PREDICTIONS)
 
 
 ########################################################
 #Enlisting functions here
 
 classlist.createSlots()
-enlister.init()
-#enlister.loadBuckets()
+#enlister.init()
+enlister.loadBuckets()
 
 enlister.enlist()
 
-#genetic_enlister.generateSubjectPool()
-#genetic_enlister.enlist()
+genetic_enlister.generateSubjectPool()
+genetic_enlister.enlist()

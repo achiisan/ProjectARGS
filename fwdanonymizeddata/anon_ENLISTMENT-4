@@ -2,7 +2,7 @@
 # FILE H:\REGIST-demo\dat\UPLB\2015\FIRST\ENLISTMENT-4
 # GENERATED 20150729-0717
 #
-# Format is : 
+# Format is :
 # Line 1: STDNO,NAME,GENDER,COUNTRY,CURRICULUM,SCHOLARSHIP,COLLEGE,EARNED,CLASSIF,YEARLEVEL,ALLOWED,GROUP,NPRIORITY,NALTERNATES,NCURRENT
 # Line 2: STDNO,YEAR,TERM,COURSE,SECTION,UNITS,GRADE,COURSERANK,CONTRIB
 #    where,
@@ -16,7 +16,7 @@
 # NCURRENT   : No. of courses currently registered
 "# COURSERANK : Relative ""urgency"" as a priority course"
 # CONTRIB    : Contribution of student to demand for COURSE
-# 
+#
 # GROUP=0    : Manually enlisted (GS, CVM, ...)
 # GROUP=1    : New Student (no record of any grade)
 # GROUP=2    : Graduating (24 units or less to earn in curriculum, no remaining courses w/ unsatisfied prereqs)
@@ -28,7 +28,7 @@
 # GROUP=8    : (reserved)
 # GROUP=9    : Courses not offered, or prerequisites not satisfied
 # GROUP=10   : Curricular program completed?
-#
+###
 #
 3311-40158,Carl Gray,M,1,DVM-2011,0,CVM,113,2,4,21,4,6,1,0
 3311-40158,2015,FIRST,VPTH 121,,4,,1,1.0000

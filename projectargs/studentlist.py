@@ -13,8 +13,8 @@ import json
 #that will be used for alloting students
 
 
-def loadStudentList():
-	filebuf = Parser.fileread("../fwdanonymizeddata/PREDICTIONS")
+def loadStudentList(filename):
+	filebuf = Parser.fileread("../fwdanonymizeddata/"+filename)
 
 	splitter = filebuf.split("###")
 
@@ -45,6 +45,8 @@ def loadStudentList():
 
 	database.commit()
 
+#CHANGE TO REGIST.DB WHEN ACCESSING REGIST ORGINIAL DATA(FOR ANALYTICS)
+	#database.savetofile("regist.db")
 	database.savetofile()
 
 def getStudentViaCurriculum(curriculum, yearlevel):

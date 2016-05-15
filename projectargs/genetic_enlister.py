@@ -6,6 +6,7 @@ import random
 import mongo_database
 import subjecttree
 import enlister
+import database
 from subjecttree import ClassNode
 from intervaltree import IntervalTree
 
@@ -71,7 +72,7 @@ def enlist():
 				ms.nunits = currUnits
 
 				for entry in candidatesubjs:
-					if ms.nunits + int(entry[4]) >= maxUnits:
+					if ms.nunits + int(entry[4]) > maxUnits:
 						break
 
 					if entry[2] in subjectpool and len(subjectpool[entry[2]]) > 0:
